@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "iosfwd": "cpp",
+        "iterator": "cpp",
+        "system_error": "cpp",
+        "xlocale": "cpp",
+        "xstring": "cpp",
+        "atomic": "cpp",
+        "charconv": "cpp",
+        "exception": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "streambuf": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "xlocinfo": "cpp",
+        "xmemory": "cpp",
+        "xutility": "cpp"
+    }
+}
