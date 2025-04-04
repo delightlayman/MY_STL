@@ -16,6 +16,9 @@
         "utility": "cpp",
         "xlocinfo": "cpp",
         "xmemory": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "xtr1common": "cpp"
     }
 }
