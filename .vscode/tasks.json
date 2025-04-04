@@ -12,7 +12,7 @@
                 "${workspaceFolder}\\test.exe"
             ],
             "options": {
-                "cwd": "${workspaceFolder"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"

@@ -1,11 +1,14 @@
 #include "string.h"
 using std::endl;
+using std::cout;
 namespace My_String{
 //constructor
 //默认1 用于存储'\0'
 m_string::m_string():_s(new char[1]),_size(1),_capacity(1){
+    strcpy(_s,"\0");
 }
 m_string::m_string(const char* str):_s(new char[strlen(str)+1]),_size(strlen(str)),_capacity(strlen(str)){
+    strcpy(_s,str);
 }
 
 m_string::m_string(const m_string& s):_s(new char[s.size()+1]),_size(s.size()),_capacity(s.size()){
@@ -21,6 +24,8 @@ m_string::~m_string(){
     _s=nullptr;
     _size=0;
     _capacity=0;
+
+    //cout<<"~m_string"<<endl;
 }
 // //operator overloding
 // //relation operator
@@ -35,7 +40,7 @@ m_string::~m_string(){
 //input and output
 
 ostream& operator<<(ostream& os,const m_string& s){
-    os<<s._s<<" "<<s._size<<""<<s._capacity<<endl;
+    os<<s._s<<" "<<s._size<<" "<<s._capacity<<endl;
     return os;
 }
 istream& operator>>(istream& is,m_string& s){

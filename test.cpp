@@ -10,11 +10,16 @@ using std::endl;
     m_string s2("uccu");
     m_string s3(s2);
 
-    cout<<s1<<endl;
-    cout<<s2<<endl;
-    cout<<s3<<endl;
+    cout<<s1;
+    cout<<s2;
+    cout<<s3;
+    
+    s1=s3;
+    cout<<s1;
  }
 int main(){
+    size_t a=10;
     test_1();
-    
+    cout<<"hello"<<endl;
+    cout<<a;
 }
