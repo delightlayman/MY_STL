@@ -1,5 +1,6 @@
 #include "string.h"
 using My_String::m_string;
+using My_String::simple_s;
 using std::cout;
 using std::cin;
 using std::endl;
