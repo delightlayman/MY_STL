@@ -2,19 +2,21 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <cassert>
 using std::ostream;
 using std::istream;
 
-namespace My_String{
+namespace My_STL{
     class m_string{
     private:
         char* _s;
         //有效字符数
         size_t _size;
-        //容量
+        //有效字符容量
         size_t _capacity;
-
+        
     public:
+        static const size_t npos = -1;
         //iterator
         typedef char* iterator;
         //iterator
@@ -28,21 +30,27 @@ namespace My_String{
 
         //constructor
         m_string();
-        m_string(const char* str);
+        //explicit仅可用于声明 
+        explicit m_string(const char* str);
         m_string(const m_string& s);
-        m_string(m_string&& s);
+        m_string(m_string&& s)noexcept;
+
+        m_string(size_t n,char c='0');
         //destructor
         ~m_string();
         //operator overloding
+        //assignment operator
+        m_string& operator=(const m_string& s);
+        m_string& operator=(m_string&& s)noexcept;
         //relation operator
-        bool operator<(const m_string& s);
-        bool operator==(const m_string& s);
+        bool operator<(const m_string& s)const;
+        bool operator==(const m_string& s)const;
 
-        bool operator<=(const m_string& s);
-        bool operator!=(const m_string& s);
+        bool operator<=(const m_string& s)const;
+        bool operator!=(const m_string& s)const;
 
-        bool operator>(const m_string& s);
-        bool operator>=(const m_string& s);
+        bool operator>(const m_string& s)const;
+        bool operator>=(const m_string& s)const;
         //input and output
 
         friend ostream& operator<<(ostream& os,const m_string& s);
@@ -55,24 +63,28 @@ namespace My_String{
         m_string& operator+=(const char* str);
         m_string& operator+=(const m_string& s);
 
-        m_string& operator+(char c);
-        m_string& operator+(const char* str);
-        m_string& operator+(const m_string& s);
+        m_string operator+(char c)const;
+        m_string operator+(const char* str)const;
+        friend m_string operator+(char c,const m_string& s);
+        friend m_string operator+(const char* str,const m_string& s);
+        m_string operator+(const m_string& s)const;
 
         m_string& insert(size_t pos,char c);
         m_string& insert(size_t pos,const char* str);
         m_string& insert(size_t pos,const m_string& s);
         
         //erase---delete--remove
-        m_string& erse(size_t pos,size_t len);
+        void pop_back();
+        m_string& erase(size_t pos,size_t len);
         //query---find
+        const char& operator[](size_t pos)const;
         char& operator[](size_t pos);
 
-        size_t find(char c);
-        size_t find(const char* str);
-        size_t find(const m_string& s);
+        char* find(char c)const;
+        char* find(const char* str)const;
+        char* find(const m_string& s)const;
 
-        m_string& substr(size_t pos,size_t len);
+        m_string substr(size_t pos,size_t len)const;
         
         size_t size() const;
         size_t capacity() const;    
@@ -80,12 +92,9 @@ namespace My_String{
         m_string& reverse();
 
         void reserve(size_t len);
-        void resize(size_t len);
+        void resize(size_t len,char c = '0');
 
         const char* c_str(const m_string& s);
-
-        m_string& operator=(const m_string& s);
-        m_string& operator=(m_string&& s);
         
     };
 
