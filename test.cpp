@@ -1,6 +1,10 @@
 #include "string.h"
-using My_STL::m_string;
-using My_STL::simple_s;
+#include "vector.h"
+//my string
+using MY_STL::m_string;
+using MY_STL::simple_s;
+//my vector
+
 using std::cout;
 using std::cin;
 using std::endl;

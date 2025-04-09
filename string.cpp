@@ -4,7 +4,7 @@ using std::cout;
 using std::swap;
 using std::min;
 using std::move;//将左值显式转换为右值引用，标记该对象可被移动
-namespace My_STL {
+namespace MY_STL {
     //constructor
     //默认1 用于存储'\0'
     m_string::m_string()

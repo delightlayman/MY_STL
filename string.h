@@ -1,12 +1,7 @@
 #pragma once
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <cassert>
-using std::ostream;
-using std::istream;
+#include "MY_STL.h"
 
-namespace My_STL{
+namespace MY_STL{
     class m_string{
     private:
         char* _s;
