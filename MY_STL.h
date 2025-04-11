@@ -6,6 +6,13 @@
 using std::ostream;
 using std::istream;
 
-namespace MY_STL{
-    
-}
+using std::cout;
+using std::cin;
+using std::endl;
+
+using std::swap;
+using std::min;
+using std::max;
+using std::move;//将左值显式转换为右值引用，标记该对象可被移动
+
+namespace MY_STL{}//名称空间声明

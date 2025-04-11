@@ -5,10 +5,6 @@ using MY_STL::m_string;
 using MY_STL::simple_s;
 //my vector
 
-using std::cout;
-using std::cin;
-using std::endl;
-
  void test_1(){
     m_string s1(10);
     m_string s2("hello");
