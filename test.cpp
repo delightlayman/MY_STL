@@ -7,4 +7,7 @@ int main(){
     //test_5();
 
     vector_test_1();
+
+
+    return 0;
 }
