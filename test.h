@@ -130,13 +130,138 @@ void vector_test_1(){
     v.push_back(6);
     v.push_back(6);
     v.push_back(6);
-    v.push_back(6);
-    v.push_back(6);
-    v.push_back(6);
-    v.push_back(6);
-    v.push_back(6);
-    v.push_back(6);
 
-    for(int a:v)
-        cout<<a<<" ";
+    v.resize(20);
+    size_t cnt = 0;
+    for (int a : v) {
+        cout << a << " ";
+        cnt++;
+    }
+    cout << endl << "count:" << cnt <<"size: " << v.size()<<"capacity: "<<v.capacity() << endl;
+
+    
+    cnt = 0;
+    v.resize(50,'a');
+    for (int a : v) {
+        cout << a << " ";
+        cnt++;
+    }
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+
+
+
+    cnt = 0;
+    v.resize(200,88);
+    for (int a : v) {
+        cout << a << " ";
+        cnt++;
+    }
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+
+
+
+    cnt = 0;
+    v.resize(355,55);
+    for (int a : v) {
+        cout << a << " ";
+        cnt++;
+    }
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+    cnt = 0;
+    v.resize(100, 55);
+    for (int a : v) {
+        cout << a << " ";
+        cnt++;
+    }
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+
+
+    v.reserve(100);
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+    v.reserve(1000);
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+    v.reserve(10000);
+    cout << endl << "count:" << cnt << " size: " << v.size() << " capacity: " << v.capacity() << endl;
+}
+
+
+void vector_test_2() {
+    m_vector<int> v(10, 1);
+    v.reserve(100);
+    int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+    m_vector<int> v1(arr, 10);
+
+    m_vector<int> v2(v1);
+
+    m_vector<int> v3 = v2;
+    m_vector<int> v4 = v3;
+
+
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+    cout <<v.size()<<" " << v.capacity() << endl;
+
+    for (int i = 0; i < v1.size(); i++) {
+        cout << v1[i] << " ";
+    }
+    cout << endl;
+    cout << v1.size() << " " << v1.capacity() << endl;
+
+    for (int i = 0; i < v2.size(); i++) {
+        cout << v2[i] << " ";
+    }
+    cout << endl;
+    cout << v2.size() << " " << v2.capacity() << endl;
+
+    for (int i = 0; i < v3.size(); i++) {
+        cout << v3[i] << " ";
+    }
+    cout << endl;
+    cout << v3.size() << " " << v3.capacity() << endl;
+}
+
+void vector_test_3() {
+    int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+    int arr1[] = { 11,12,13,14,15,16,17,18,19,20 };
+    m_vector<int> v1(arr, 10);
+    v1.pop_back();
+    v1.pop_back();
+    v1.pop_back();
+    v1.pop_back();
+    v1.pop_back();
+    v1.pop_back();
+
+    v1.insert(1, arr1, 5);
+    v1.insert(1, arr1, 5);
+    v1.insert(1, arr1, 5);
+    v1.insert(1,arr1,5);
+
+    v1.erase(1, 5);
+    v1.erase(1, 5);
+    v1.erase(1, 5);
+
+
+    m_vector<int>::iterator it = v1.begin();
+    while (it != v1.end()) {
+        cout << *it << " ";
+        ++it;
+    }
+    cout << endl;
+
+
+}
+
+void simple_s_test() {
+    const char* s = "you can really code";
+    simple_s s1(s);
+    simple_s s2(s1);
+    simple_s s3;
+    s3=s2;
+
+    cout << s1 << endl;
+    cout << s2 << endl;
+    cout << s3 << endl;
+
 }

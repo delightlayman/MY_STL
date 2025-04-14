@@ -99,20 +99,25 @@ namespace MY_STL{
         char* _s;
     public:
         //constructor
-        simple_s();
-        simple_s(const char* str);
+        simple_s(const char* str="");
         //传统写法
-        simple_s(const simple_s& s);
-        //现代写法
         //simple_s(const simple_s& s);
+        //现代写法
+        simple_s(const simple_s& s);
 
         //destructor
         ~simple_s();
         //operator =
         //传统写法
-        simple_s& operator=(const simple_s& s);
-        //现代写法
         //simple_s& operator=(const simple_s& s);
+        //现代写法
+        simple_s& operator=(simple_s s);
+
+        //operator<<
+        friend ostream& operator<<(ostream& os, const simple_s& s) {
+            os << s._s;
+            return os;
+        }
 
     };
 

@@ -309,19 +309,32 @@ namespace MY_STL {
     }
 
 
-    // //constructor
-    // simple_s::simple_s(){}
-    // simple_s::simple_s(const char* str){}
-    // //传统写法
-    // simple_s::simple_s(const simple_s& s){}
-    // //现代写法
-    // //simple_s::simple_s(const simple_s& s){}
-
-    // //destructor
-    // simple_s::~simple_s(){}
-    // //operator =
-    // //传统写法
-    // simple_s& simple_s::operator=(const simple_s& s){}
-    // //现代写法
-    // //simple_s& simple_s::operator=(const simple_s& s){}
+     //constructor
+     simple_s::simple_s(const char* str) :_s(new char[strlen(str) + 1]) {
+        strcpy(_s, str);
+     }
+     //传统写法
+     //simple_s::simple_s(const simple_s& s){}
+     //现代写法
+     //注意未初始化的_s 用于交换会崩溃
+     simple_s::simple_s(const simple_s& s)
+         :_s(nullptr){
+         simple_s tmp(s._s);
+         ::swap(_s,tmp._s);
+     }
+     
+     //destructor
+     simple_s::~simple_s(){
+        delete[] _s;
+        _s = nullptr;
+        cout << "~simple_s()" << endl;
+     }
+     //operator =
+     //传统写法
+     //simple_s& simple_s::operator=(const simple_s& s){}
+     //现代写法
+     simple_s& simple_s::operator=(simple_s s){
+         ::swap(_s,s._s);
+         return *this;
+     }
 }
