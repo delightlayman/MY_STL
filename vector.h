@@ -247,7 +247,7 @@ namespace MY_STL {
         size_t cap = capacity();
         if (si == cap) {
             size_t new_cap = cap == 0 ? 2 : cap * 2;
-            reverse(new_cap);
+            reserve(new_cap);
         }
         T* move_src = _finish;
         T* move_dest = _finish + size;
