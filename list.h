@@ -78,8 +78,8 @@ namespace MY_STL{
     //list_const_iterator<T,T*,T&>------ iterator
     //list_const_iterator<T,const T*,const T&>------ const_iterator
 
-    //为使iterator可构造iterator以及const_iterator，但是const_iterator不可构造iterator
-    //方法：1.参数为iterator构造函数，构造各个实例化的类，iterator、const_iterator等
+    //为使iterator可转换为const_iterator，但const_iterator不可转换为iterator
+    //方法：1.参数为iterator的构造函数，构造各个实例化的类，由此实现转换，如iterator->iterator、const_iterator等
     //      2.分别定义+实现    
     //      3.C++11模板元编程
 
@@ -95,7 +95,7 @@ namespace MY_STL{
         list_iterator_base(Node* p=nullptr):_ptr(p){}
         //自身的复制构造------与下方存在定义重叠部分，冲突
         //list_iterator_base(const Self& it):_ptr(it._ptr){}
-        //iterator可构造iterator以及const_iterator，但是const_iterator不可构造iterator，特性符合
+        //iterator可构造iterator以及const_iterator，但是const_iterator不可构造iterator
         list_iterator_base(const iterator& it):_ptr(it._ptr){}
 
         Ref operator*()const{
