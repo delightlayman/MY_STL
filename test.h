@@ -1,10 +1,13 @@
 #include "string.h"
 #include "vector.h"
+#include "list.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
 
 using MY_STL::m_vector;
+
+using MY_STL::m_list;
 //my vector
 
 void test_1(){
@@ -264,4 +267,112 @@ void simple_s_test() {
     cout << s2 << endl;
     cout << s3 << endl;
 
+}
+
+class date{
+    private:
+    // size_t _y=1;
+    // size_t _m=1;
+    // size_t _d=1;
+    size_t _y;
+    size_t _m;
+    size_t _d;
+    public:
+    date(size_t y=0,size_t m=1,size_t d=1):_y(y),_m(m),_d(d){}
+
+    friend ostream& operator<<(ostream& os,const date& d){
+        cout<<d._y<<" "<<d._m<<" "<<d._d<<" ";
+        return os;
+    }
+
+};
+
+void list_test1(){
+
+
+    m_list<int> ls;
+
+    ls.push_back(1);
+    ls.push_back(2);
+    ls.push_back(3);
+    ls.push_back(4);
+    ls.push_back(5);
+    ls.push_front(6);
+    ls.push_front(7);
+    ls.push_front(8);
+    ls.push_front(9);
+
+
+    ls.printf_list();
+
+
+    m_list<int> a(ls);
+    a.printf_list();
+
+    m_list<int> b;
+    b=a;
+    b.printf_list();
+
+    m_list<int> c(10);
+    c.printf_list();
+    m_list<int> d(10,10);
+    d.printf_list();
+
+    c.swap(d);
+    c.printf_list();
+    d.printf_list();
+
+
+
+    // m_list<date> ls_1;
+    // ls_1.push_back(date());
+    // ls_1.push_back(date(1,2,3));
+    // ls_1.push_back(date(4,5,6));
+    // ls_1.push_back(date(7,8,9));
+
+    // ls_1.printf_list();
+
+    // ls_1.clear();
+
+    // ls_1.printf_list();
+    //for(){}
+
+}
+
+void list_test2(){
+    m_list<int> e(5,5);
+    e.printf_list();
+    
+    e.insert(e.begin(),2);
+    e.insert(e.begin(),2);
+    e.insert(e.begin(),2);
+    e.insert(e.begin(),2);
+    e.insert(e.begin(),2);
+    e.printf_list();
+
+    e.erase(e.begin(),e.begin()+2);
+    e.printf_list();
+
+    e.pop_back();
+    e.pop_front();
+    e.printf_list();
+    e.insert(e.begin()+2,3);
+    e.insert(e.begin()+2,3);
+    e.insert(e.begin()+2,3);
+
+    e.pop_back();
+    e.pop_front();
+    e.printf_list();
+
+    m_list<int> f;
+    f.push_back(1);
+    f.push_back(2);
+    f.push_back(3);
+    f.push_back(4);
+    f.push_back(5);
+    f.push_back(6);
+    cout<<*e.insert(e.begin(),f.begin(),f.end())<<endl;
+    e.printf_list();
+    e.erase(e.begin()+1,e.begin()+3);
+    e.printf_list();
 }

@@ -10,7 +10,8 @@ int main(){
     //vector_test_2();
     //vector_test_3();
 
-    simple_s_test();
-
+    //simple_s_test();
+    //list_test1();
+    list_test2();
     return 0;
 }
