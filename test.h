@@ -1,14 +1,18 @@
+#pragma once
 #include "string.h"
 #include "vector.h"
 #include "list.h"
+#include "stack_queue.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
-
-using MY_STL::m_vector;
-
+//my list
 using MY_STL::m_list;
 //my vector
+using MY_STL::m_vector;
+//my stack & queue
+using MY_STL::m_stack;
+using MY_STL::m_queue;
 
 void test_1(){
   m_string s1(10);
@@ -375,4 +379,68 @@ void list_test2(){
     e.printf_list();
     e.erase(e.begin()+1,e.begin()+3);
     e.printf_list();
+}
+
+
+void stack_test(){
+     m_stack<int,vector<int>> sv;
+     sv.push(1); 
+     sv.push(2); 
+     sv.push(3); 
+     sv.push(4); 
+     sv.push(5);
+
+     while(!sv.empty()){
+        cout<<sv.top();
+        sv.pop();
+     }
+     cout<<endl;
+     m_stack<int,list<int>> sl;
+     sl.push(1); 
+     sl.push(2); 
+     sl.push(3); 
+     sl.push(4); 
+     sl.push(5);
+     
+     size_t si=sl.size();
+     for(int i=0;i<si;++i){
+        cout<<sl.top();
+        sl.pop();
+     }
+
+}
+
+
+void queue_test(){
+    //vector 没有push_front(),pop_front(),其头插头删时间复杂度为O(n)
+    // m_queue<int,vector<int>> qv;
+    // qv.push(1); 
+    // qv.push(2); 
+    // qv.push(3); 
+    // qv.push(4); 
+    // qv.push(5);
+
+    // while(!qv.empty()){
+    //    cout<<qv.front()<<"-"<<qv.back()<<" ";
+    //    qv.pop();
+    // }
+    // cout<<endl;
+    m_queue<int,list<int>> ql;
+    ql.push(1); 
+    ql.push(2); 
+    ql.push(3); 
+    ql.push(4); 
+    ql.push(5);
+    
+    while(!ql.empty()){
+        cout<<ql.front()<<"-"<<ql.back()<<" ";
+        ql.pop();
+    }
+
+    // size_t si=ql.size();
+    // for(int i=0;i<si;++i){
+    //    cout<<ql.front()<<"-"<<ql.back()<<" ";
+    //    ql.pop();
+    // }
+
 }

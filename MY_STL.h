@@ -4,6 +4,12 @@
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
+
+#include <vector>
+#include <list>
+using std::vector;
+using std::list;
+
 using std::ostream;
 using std::istream;
 

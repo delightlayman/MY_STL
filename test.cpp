@@ -12,6 +12,10 @@ int main(){
 
     //simple_s_test();
     //list_test1();
-    list_test2();
+    //list_test2();
+
+    //stack_test();
+    queue_test();
+
     return 0;
 }
