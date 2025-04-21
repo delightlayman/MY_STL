@@ -2,7 +2,7 @@
 #include "string.h"
 #include "vector.h"
 #include "list.h"
-#include "stack_queue.h"
+#include "adapter.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -10,9 +10,12 @@ using MY_STL::simple_s;
 using MY_STL::m_list;
 //my vector
 using MY_STL::m_vector;
-//my stack & queue
+//my stack & queue & priority_queue
 using MY_STL::m_stack;
 using MY_STL::m_queue;
+using MY_STL::m_priority_queue;
+using MY_STL::less;
+using MY_STL::more;
 
 void test_1(){
   m_string s1(10);
@@ -443,4 +446,44 @@ void queue_test(){
     //    ql.pop();
     // }
 
+}
+void priority_queue_test(){
+    m_priority_queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+    q.push(5);
+    q.push(7);
+    q.push(5);
+    q.push(8);
+    q.push(6);
+
+    while(!q.empty()){
+        cout<<q.top()<<" ";
+        q.pop();
+    }
+    cout<<endl;
+}
+
+
+void priority_queue_test1(){
+    m_priority_queue<int,vector<int>,more<int>> q;//匿名函数对象
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+    q.push(5);
+    q.push(7);
+    q.push(5);
+    q.push(8);
+    q.push(6);
+
+    while(!q.empty()){
+        cout<<q.top()<<" ";
+        q.pop();
+    }
+    cout<<endl;
 }
