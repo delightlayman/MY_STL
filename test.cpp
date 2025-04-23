@@ -16,8 +16,8 @@ int main(){
 
     //stack_test();
     //queue_test();
-    priority_queue_test();
-    priority_queue_test1();
-
+    // priority_queue_test();
+    // priority_queue_test1();
+    list_test_r_iterator();
     return 0;
 }

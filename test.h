@@ -2,7 +2,8 @@
 #include "string.h"
 #include "vector.h"
 #include "list.h"
-#include "adapter.h"
+#include "container_adapter.h"
+#include "iterator_adapter.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -14,6 +15,7 @@ using MY_STL::m_vector;
 using MY_STL::m_stack;
 using MY_STL::m_queue;
 using MY_STL::m_priority_queue;
+using MY_STL::m_reverse_iterator;
 using MY_STL::less;
 using MY_STL::more;
 
@@ -486,4 +488,40 @@ void priority_queue_test1(){
         q.pop();
     }
     cout<<endl;
+}
+
+
+void list_test_r_iterator(){
+
+    m_list<int> e(5,5);
+    e.printf_list();
+    
+    // e.insert(e.begin(),2);
+    // e.insert(e.begin(),2);
+    // e.insert(e.begin(),2);
+    // e.insert(e.begin(),2);
+    // e.insert(e.begin(),2);
+
+    // e.printf_list();
+    e.push_back(1);
+    e.push_back(2);
+    e.push_back(3);
+    e.push_back(4);
+    e.push_back(5);
+    e.push_back(6);
+    e.printf_list();
+
+
+    m_list<int>::reverse_iterator rit=e.rbegin();
+    while(rit!=e.rend()){
+        cout<<*rit<<" ";
+        rit++;
+    }
+    // m_list<int>::reverse_iterator rit=e.rend();
+    // while(rit!=e.rbegin()){
+    //     cout<<*rit<<" ";
+    //     rit--;
+    // }
+    cout<<endl;
+ 
 }

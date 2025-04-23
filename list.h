@@ -1,5 +1,7 @@
 #pragma once
 #include "MY_STL.h"
+#include "iterator_adapter.h"
+using MY_STL::m_reverse_iterator;
 
 namespace MY_STL{
     //带头双向循环链表
@@ -164,7 +166,6 @@ namespace MY_STL{
             typedef list_iterator_base<T,T*,T&> iterator;
             typedef list_iterator_base<T,const T*,const T&> const_iterator;
             
-            
             iterator begin(){
                 return _end->_next;
             }
@@ -178,6 +179,14 @@ namespace MY_STL{
             const_iterator end()const{
                 return _end;
             }
+
+            using reverse_iterator=m_reverse_iterator<iterator,T*,T&>;
+            using const_reverse_iterator=m_reverse_iterator<const_iterator,const T*,const T&>;
+
+            reverse_iterator rbegin(){ return end();}
+            reverse_iterator rend(){ return begin();}
+            const_reverse_iterator rbegin()const{ return end();}
+            const_reverse_iterator rend()const{ return begin();}
             //constructor
             //初始化为一个头结点，此节点作为超尾end
             m_list():_end(new Node){} 
