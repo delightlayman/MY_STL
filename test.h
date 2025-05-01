@@ -4,6 +4,7 @@
 #include "list.h"
 #include "container_adapter.h"
 #include "iterator_adapter.h"
+#include "binary_search_tree.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -18,6 +19,8 @@ using MY_STL::m_priority_queue;
 using MY_STL::m_reverse_iterator;
 using MY_STL::less;
 using MY_STL::more;
+//tree
+using MY_STL::BSTree;
 
 void test_1(){
   m_string s1(10);
@@ -524,4 +527,47 @@ void list_test_r_iterator(){
     // }
     cout<<endl;
  
+}
+
+
+void test_BSTree(){
+    BSTree<int> bstree;
+    bstree.insert(5);
+    bstree.insert(3);
+    bstree.insert(7);
+    bstree.insert(2);
+    bstree.insert(4);
+    bstree.insert(6);
+    bstree.insert(8);
+
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+
+    bstree.erase(4);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+
+    bstree.erase(3);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+
+    bstree.erase(7);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+    bstree.erase(5);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+    bstree.erase(6);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
+    bstree.erase(8);
+    cout << "Inorder Traversal: ";
+    bstree.inorder(bstree.root());
+    cout << endl;
 }
