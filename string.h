@@ -26,7 +26,8 @@ namespace MY_STL{
         //constructor
         m_string();
         //explicit仅可用于声明 
-        explicit m_string(const char* str);
+        //explicit m_string(const char* str);
+        m_string(const char* str);        
         m_string(const m_string& s);
         m_string(m_string&& s)noexcept;
 

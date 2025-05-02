@@ -1,35 +1,37 @@
 #pragma once
 #include "MY_STL.h"
 //Binary Search Tree
+//key模型：参数仅有Key，由于搜索查找
+//key/value模型：参数有Key和Value，由于查找和计数
+//注意：key不可修改，value可修改
 namespace MY_STL{
-    template <class K>
+    template <class K,class V=int>
     struct BSTNode {
         K _key;//关键字---实际为某一类值，用作标记
+        V _val;
         BSTNode<K>* _left;
         BSTNode<K>* _right;
 
-        BSTNode(const K& key = 0) : _key(key), _left(nullptr), _right(nullptr) {}
+        BSTNode(const K& key = K(),const V& val=V()) : _key(key),_val(val), _left(nullptr), _right(nullptr) {}
     };
-    template <class K>
+    template <class K,class V=int>
     class BSTree {
         public:
-        using Node = BSTNode<K>;
-        using Self = BSTree<K>;
+        using Node = BSTNode<K,V>;
+        using Self = BSTree<K,V>;
         using N_ptr= Node*;
         using N_ref= Node&;
         //constructor
         BSTree() :_root(nullptr) {}
-        // BSTNode(const Self& bstree) {
-        //     _root = new Node(bstree._root->_key);
-        //     //递归拷贝？
-        // }
+        // BSTNode(const Self& bstree) { }
         //destructor
         ~BSTree() {
+
         }
         //递归，需要有一个递推的参数，则不能只用this指针
         //insert---bool值检查是否插入成功
-        bool insert(const K& key) {
-            Node* newNode = new Node(key);
+        bool insert(const K& key,const V& val) {
+            Node* newNode = new Node(key,val);
             if (_root == nullptr) {
                 _root = newNode;
                 return true;
@@ -60,15 +62,7 @@ namespace MY_STL{
             return true;
         }
         //插入并保留bstree---须深拷贝
-        // bool insert(const Self& bstree) {
-        //     if (bstree == nullptr) {
-        //         cout << "empty BSTree" << endl;
-        //         return false;
-        //     }
-        //     if (_root == nullptr) {
-        //         return false;
-        //     }
-        // }
+        // bool insert(const Self& bstree) {}
         //erase---bool值检查是否删除成功
         //三种情况合为两种：
         //1.无子树或单子树 删除并把后续接入到父节点上
@@ -147,7 +141,7 @@ namespace MY_STL{
             return true;
         }
         //find---是否找到
-        Node* find(const K & key) {
+        Node* find(const K& key) {
             if (_root == nullptr) {
                 cout << "empty tree" << endl;
                 return nullptr;
@@ -167,6 +161,16 @@ namespace MY_STL{
             return nullptr;
         }
         //clear---清空树
+        void clear(N_ptr root){
+            if(root==nullptr)
+                return;
+            else{
+                clear(root->_left);
+                clear(root->_right);
+                delete root;
+                root = nullptr;
+            }    
+        }
         //去右边
         N_ptr& to_right(N_ptr& cur) {
             return cur = cur->_right;
@@ -185,7 +189,7 @@ namespace MY_STL{
             if(root==nullptr)
                 return;
             inorder(root->_left);
-            cout << root->_key << " ";
+            cout << root->_key << ":"<< root->_val <<" ";
             inorder(root->_right);
         }
         //postorder traverse

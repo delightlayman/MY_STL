@@ -530,44 +530,103 @@ void list_test_r_iterator(){
 }
 
 
-void test_BSTree(){
-    BSTree<int> bstree;
-    bstree.insert(5);
-    bstree.insert(3);
-    bstree.insert(7);
-    bstree.insert(2);
-    bstree.insert(4);
-    bstree.insert(6);
-    bstree.insert(8);
+// void test_BSTree(){
+//     BSTree<int> bstree;
+//     bstree.insert(5);
+//     bstree.insert(3);
+//     bstree.insert(7);
+//     bstree.insert(2);
+//     bstree.insert(4);
+//     bstree.insert(6);
+//     bstree.insert(8);
 
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
 
-    bstree.erase(4);
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
+//     bstree.erase(4);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
 
-    bstree.erase(3);
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
+//     bstree.erase(3);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
 
-    bstree.erase(7);
-    cout << "Inorder Traversal: ";
+//     bstree.erase(7);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
+//     bstree.erase(5);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
+//     bstree.erase(6);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
+//     bstree.erase(8);
+//     cout << "Inorder Traversal: ";
+//     bstree.inorder(bstree.root());
+//     cout << endl;
+// }
+
+
+// void test_BSTree_1(){
+//     BSTree<int> bstree;
+//     bstree.insert(5);
+//     bstree.insert(3);
+//     bstree.insert(7);
+//     bstree.insert(2);
+//     bstree.insert(4);
+//     bstree.insert(6);
+//     bstree.insert(8);
+
+//     cout<<"clear BSTree"<<endl;
+//     bstree.clear(bstree.root());
+//     if(!bstree.root())
+//         cout<<"BSTree is empty"<<endl;
+//     else
+//         cout<<"BSTree is not empty"<<endl;
+// }
+
+
+
+// void test_BSTree_2(){
+//     BSTree<m_string> bstree;
+//     bstree.insert("苹果");
+//     bstree.insert("香蕉");
+//     bstree.insert("橘子");
+//     bstree.insert("葡萄");
+//     bstree.insert("草莓");
+//     bstree.insert("西瓜");
+
+//     if(bstree.find("香蕉")){
+//         cout<<"find banana"<<endl;
+//     }else{
+//         cout<<"not find banana"<<endl;
+//     }
+
+//     if(bstree.find("菠萝")){
+//         cout<<"find pineapple"<<endl;
+//     }else{
+//         cout<<"not find pineapple"<<endl;
+//     }
+// }
+
+
+
+void test_BSTree_2(){
+    BSTree<m_string,int> bstree;
+    m_string str[]={"苹果","香蕉","橘子","葡萄","草莓","西瓜","苹果","橘子","草莓","西瓜","苹果","香蕉","橘子","葡萄"};
+    for(auto s:str){
+        BSTree<m_string,int>::N_ptr p=bstree.find(s);
+        if(p==nullptr)
+            bstree.insert(s,1);
+        else{
+            p->_val++;
+        }
+    }
     bstree.inorder(bstree.root());
-    cout << endl;
-    bstree.erase(5);
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
-    bstree.erase(6);
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
-    bstree.erase(8);
-    cout << "Inorder Traversal: ";
-    bstree.inorder(bstree.root());
-    cout << endl;
 }

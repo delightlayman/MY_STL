@@ -19,6 +19,8 @@ int main(){
     // priority_queue_test();
     // priority_queue_test1();
     //list_test_r_iterator();
-    test_BSTree();
+    //test_BSTree();
+    //test_BSTree_1();
+    test_BSTree_2();
     return 0;
 }

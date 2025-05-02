@@ -10,7 +10,7 @@ namespace MY_STL {
     m_string::m_string()
         :_s(new char[1]), _size(0), _capacity(0) {
         strcpy(_s, "");
-        cout << "dafault_constructor" << endl;
+        //cout << "dafault_constructor" << endl;
     }
     m_string::m_string(const char* str) {
         assert(str);
@@ -18,7 +18,7 @@ namespace MY_STL {
         _capacity = _size;
         _s = new char[_size + 1];
         strcpy(_s, str);
-        cout << "constructor" << endl;
+        //cout << "constructor" << endl;
     }
 
     m_string::m_string(const m_string& s)
@@ -26,13 +26,13 @@ namespace MY_STL {
         :_s(new char[s._capacity + 1]), _size(s._size), _capacity(s._capacity) {
         strcpy(_s, s._s);
         //memcpy(_s, s._s, _size + 1);
-        cout << "copy_constructor" << endl;
+        //cout << "copy_constructor" << endl;
 
     }
     m_string::m_string(m_string&& s)noexcept
         :_s(s._s), _size(s._size), _capacity(s._capacity) {
         s._s = nullptr;
-        cout << "move_constructor" << endl;
+        //cout << "move_constructor" << endl;
     }
 
     m_string::m_string(size_t n, char c) :_s(new char[n + 1]), _size(n), _capacity(n) {
@@ -44,7 +44,7 @@ namespace MY_STL {
     }
     //destructor
     m_string::~m_string() {
-        cout << "~m_string:" << "this:" << (void*)this << " ,_s:" << (void*)_s << endl;
+        //cout << "~m_string:" << "this:" << (void*)this << " ,_s:" << (void*)_s << endl;
         delete[] _s;
         _s = nullptr;
         _size = 0;
@@ -64,7 +64,7 @@ namespace MY_STL {
             _size = s._size;
             _capacity = s._capacity;
         }
-        cout << "copy_assignment" << endl;
+        //cout << "copy_assignment" << endl;
 
         return *this;
     }
@@ -76,7 +76,7 @@ namespace MY_STL {
             _capacity = s._capacity;
             s._s = nullptr;
         }
-        cout << "move_assignment" << endl;
+        //cout << "move_assignment" << endl;
         return *this;
     }
 
@@ -102,7 +102,8 @@ namespace MY_STL {
     }
     //input and output
     ostream& operator<<(ostream& os, const m_string& s) {
-        os << "object: " << &s << ", _s:" << (void*)s._s << ", value:" << s._s << "," << s._size << "," << s._capacity << endl;
+        //os << "object: " << &s << ", _s:" << (void*)s._s << ", value:" << s._s << "," << s._size << "," << s._capacity << endl;
+        os<<s._s;
         return os;
     }
     istream& operator>>(istream& is, m_string& s) {
