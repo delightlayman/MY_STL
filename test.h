@@ -616,17 +616,56 @@ void list_test_r_iterator(){
 // }
 
 
+//
+//void test_BSTree_2(){
+//    BSTree<m_string,int> bstree;
+//    m_string str[]={"苹果","香蕉","橘子","葡萄","草莓","西瓜","苹果","橘子","草莓","西瓜","苹果","香蕉","橘子","葡萄"};
+//    for(auto s:str){
+//        BSTree<m_string,int>::N_ptr p=bstree.find(s);
+//        if(p==nullptr)
+//            bstree.insert(s,1);
+//        else{
+//            p->_val++;
+//        }
+//    }
+//    bstree.inorder(bstree.root());
+//}
 
-void test_BSTree_2(){
-    BSTree<m_string,int> bstree;
-    m_string str[]={"苹果","香蕉","橘子","葡萄","草莓","西瓜","苹果","橘子","草莓","西瓜","苹果","香蕉","橘子","葡萄"};
-    for(auto s:str){
-        BSTree<m_string,int>::N_ptr p=bstree.find(s);
-        if(p==nullptr)
-            bstree.insert(s,1);
-        else{
-            p->_val++;
-        }
+
+
+
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+
+
+class Solution {
+public:
+    bool is_left(TreeNode* lt, TreeNode* s) {
+        if (lt == nullptr)
+            return false;
+        return lt == s || is_left(lt->left, s) || is_left(lt->right, s);
     }
-    bstree.inorder(bstree.root());
-}
+    //case1: pq各在cur左右子树 cur为共同祖先
+    //case2：pq皆在左子树或右子树，前往对应子树判定 
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root==p||root==q)
+            return root;
+        bool a = is_left(root->left, p);
+        bool b = is_left(root->left, q);
+        if (a != b)
+            return root;
+        else if (a && b) {
+            return lowestCommonAncestor(root->left, p, q);
+        }
+        else {
+            return lowestCommonAncestor(root->right, p, q);
+        }
+
+    }
+};

@@ -125,6 +125,7 @@ namespace MY_STL{
                     Node* min_parent = cur;
                     Node* min = cur-> _right;
                     while (min->_left) {
+                        min_parent=min;
                         min = min->_left;
                     }
                     cur->_key=min->_key;
