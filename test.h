@@ -5,6 +5,7 @@
 #include "container_adapter.h"
 #include "iterator_adapter.h"
 #include "binary_search_tree.h"
+#include "AVLTree.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -21,6 +22,14 @@ using MY_STL::less;
 using MY_STL::more;
 //tree
 using MY_STL::BSTree;
+using MY_STL::AVLTree;
+
+inline void random_generate(int arr[], size_t n) {
+    srand(time(0));
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand();
+    }
+}
 
 void test_1(){
   m_string s1(10);
@@ -669,3 +678,21 @@ public:
 
     }
 };
+
+
+void test_AVLTree(){
+    int arr[1000];
+    random_generate(arr,1000);
+    AVLTree<int> avltree;
+    for (int i = 0; i < 1000; i++) {
+        avltree.insert(arr[i]);
+    }
+
+
+    cout << "Inorder Traversal: ";
+    avltree.inorder(avltree.root());
+    cout << endl;
+    AVLTree<int>::N_ptr tmp=avltree.root();
+
+    cout<<"balanced? : "<<(int)avltree.height(tmp->_left)-(int)avltree.height(tmp->_right)<<endl;
+}
