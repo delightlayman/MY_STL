@@ -681,7 +681,8 @@ void list_test_r_iterator(){
 
 
 void test_AVLTree(){
-    const int N=20;
+    const int N=10000;
+    //int arr[N] = { 0,1,2,3,4 };
     int arr[N];
     random_generate(arr,N);
     AVLTree<int,int> avltree;
@@ -690,17 +691,18 @@ void test_AVLTree(){
     }
 
 
-    cout << "Inorder Traversal: ";
+    cout << "Inorder Traversal: "<<endl;
     avltree.inorder(avltree.root());
-    cout << endl;
+    cout <<avltree.size()<< endl;
 
     avltree.erase(arr[0]);
     avltree.erase(arr[5]);
-    avltree.erase(arr[10]);
+    avltree.erase(arr[9]);
 
-    cout << "Inorder Traversal: ";
+    cout << "Inorder Traversal: "<<endl;
     avltree.inorder(avltree.root());
-    cout << endl;
+    cout << avltree.size() << endl;
+
     AVLTree<int,int>::N_ptr tmp=avltree.root();
 
     cout<<"balanced? : "<<(int)avltree.height(tmp->_left)-(int)avltree.height(tmp->_right)<<endl;

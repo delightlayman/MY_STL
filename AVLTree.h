@@ -52,6 +52,8 @@ namespace MY_STL{
         //case3:bf=+-2,则前bf=+-1，即delete较低子树，从而此树出现不平衡，须旋转调整
         int _bf;//平衡因子
         AVLTreeNode(const value_type& kv=value_type()):_kv(kv),_parent(nullptr),_left(nullptr),_right(nullptr),_bf(0){}
+        //用当前节点高度也可以，但是须另外实现平衡因子的计算函数
+        //int _height
     };
     template<class K,class V>
     class AVLTree{
@@ -61,7 +63,7 @@ namespace MY_STL{
         using N_ptr=Node*;
         using N_ref=Node&;
 
-        AVLTree():_root(nullptr){}
+        AVLTree():_root(nullptr), _size(0){}
         //高度
         size_t height(N_ptr root)const{
             if(root==nullptr)
@@ -84,8 +86,10 @@ namespace MY_STL{
         //     }
 
         // }
+        //单旋和双旋的区别：新增和删除的位置
+        //单旋：newnode，parent，gf三点一线，双旋：newnode,parent,gf三点折线
         //旋转---rotate 须更新：1.父节点 2.子节点 3.平衡因子
-        //左单旋---此处特指newnode---parent---gf三点一线的情况，折线情况属于双旋
+        //左单旋---处理：parent->_bf=2,son_r->_bf=1 情况
         void rotate_L(N_ptr parent){
             N_ptr son_r=parent->_right;//右子节点
             N_ptr son_rl=son_r->_left;//右子节点的左子节点
@@ -114,7 +118,38 @@ namespace MY_STL{
             son_r->_bf=0;
 
         }
-        //右单旋---此处特指newnode---parent---gf三点一线的情况，折线情况属于双旋
+        //左单旋---处理：parent->_bf=2,son_r->_bf=0 情况
+        //仅适用于删除
+        void rotate_Ld(N_ptr parent) {
+            N_ptr son_r = parent->_right;//右子节点
+            N_ptr son_rl = son_r->_left;//右子节点的左子节点
+
+            //更新左右子节点
+            parent->_right = son_rl;
+            son_r->_left = parent;
+            //更新父节点
+            N_ptr gf = parent->_parent;//父节点的父节点
+            if (gf == nullptr) {
+                son_r->_parent = nullptr;
+                _root = son_r;
+            }
+            else {
+                son_r->_parent = gf;
+                if (gf->_left == parent)
+                    gf->_left = son_r;
+                else
+                    gf->_right = son_r;
+            }
+            parent->_parent = son_r;
+            if (son_rl != nullptr)
+                son_rl->_parent = parent;
+            //update balance factor
+            parent->_bf = 1;
+            son_r->_bf = -1;
+        }
+
+        
+        //右单旋---处理：parent->_bf=-2,son_l->_bf=-1 情况
         void rotate_R(N_ptr parent){
             N_ptr son_l=parent->_left;//左子节点
             N_ptr son_lr=son_l->_right;//左子节点的右子节点
@@ -142,7 +177,37 @@ namespace MY_STL{
             parent->_bf=0;
             son_l->_bf=0;
         }
-        //左右双旋
+        //右单旋---处理：parent->_bf=-2,son_l->_bf=0 情况
+        //仅适用于删除
+        void rotate_Rd(N_ptr parent) {
+            N_ptr son_l = parent->_left;//左子节点
+            N_ptr son_lr = son_l->_right;//左子节点的右子节点
+
+            //更新左右子节点
+            parent->_left = son_lr;
+            son_l->_right = parent;
+            //更新父节点
+            N_ptr gf = parent->_parent;//父节点的父节点
+            if (gf == nullptr) {
+                son_l->_parent = nullptr;
+                _root = son_l;
+            }
+            else {
+                son_l->_parent = gf;
+                if (gf->_left == parent)
+                    gf->_left = son_l;
+                else
+                    gf->_right = son_l;
+            }
+            parent->_parent = son_l;
+            if (son_lr != nullptr)
+                son_lr->_parent = parent;
+            //update balance factor
+            parent->_bf = -1;
+            son_l->_bf = 1;
+        }
+
+        //左右双旋---处理：parent->_bf=-2,son_l->_bf=1 情况
         void rotate_LR(N_ptr parent){
             N_ptr son_l=parent->_left;//左子节点
             N_ptr son_lr=son_l->_right;//左子节点的右子节点
@@ -153,14 +218,15 @@ namespace MY_STL{
             rotate_L(son_l);//左单旋
             rotate_R(parent);//右单旋
 
-            //更新平衡因子---若bf=0，即son_lr本身为newnode，双旋过后，三节点的bf均为0，无须更新
+            //更新平衡因子
+            //对于新增节点---若bf=0，即son_lr本身为newnode，双旋过后，三节点的bf均为0，无须更新
             if(bf==1)
                 son_l->_bf=-1;
             else if(bf==-1)
                 parent->_bf=1;
 
-        } 
-        //右左双旋
+        }
+        //右左双旋---处理：parent->_bf=2,son_r->_bf=-1 情况
         void rotate_RL(N_ptr parent){
             N_ptr son_r=parent->_right;//右子节点
             N_ptr son_rl=son_r->_left;//右子节点的左子节点
@@ -171,12 +237,14 @@ namespace MY_STL{
             rotate_R(son_r);//右单旋
             rotate_L(parent);//左单旋
 
-            //更新平衡因子---若bf=0，即son_rl本身为newnode，双旋过后，三节点的bf均为0，无须更新
+            //更新平衡因子
+            //对于新增节点---若bf=0，即son_rl本身为newnode，双旋过后，三节点的bf均为0，无须更新
             if(bf==1)
                 parent->_bf=-1;
             else if(bf==-1)
                 son_r->_bf=1;
         }
+
         //增---add
         //按BSTree插入+更新parent+更新bf+不平衡调整
         bool insert(const value_type& kv){
@@ -187,6 +255,7 @@ namespace MY_STL{
             N_ptr cur=_root;
             if(_root==nullptr){
                 _root=newNode;
+                _size++;
                 return true;
             }
             else{
@@ -208,10 +277,12 @@ namespace MY_STL{
             if(parent->_kv._first>newNode->_kv._first){
                 parent->_left=newNode;
                 parent->_bf--;//更新平衡因子
+                _size++;
             }
             else{
                 parent->_right=newNode;
                 parent->_bf++;//更新平衡因子
+                _size++;
             }
             newNode->_parent=parent;//更新父节点
 
@@ -258,10 +329,11 @@ namespace MY_STL{
             N_ptr cur=find(kv);
         
             //按BSTree删除+更新parent
-            N_ptr parent=cur->_parent;
+            N_ptr parent=nullptr;
             if (cur == nullptr)
                 return false;
             else {
+                parent = cur->_parent;
                 if (cur->_left == nullptr) {
                     if(cur==_root)
                         _root=cur->_right;
@@ -275,7 +347,8 @@ namespace MY_STL{
                             parent->_bf--;//更新平衡因子
                         }
                     }
-                    cur->_right->_parent=parent;//更新父节点
+                    if(cur->_right)
+                        cur->_right->_parent=parent;//更新父节点
                     delete cur;
                 }
                 else if (cur->_right == nullptr) {
@@ -291,7 +364,8 @@ namespace MY_STL{
                             parent->_bf--;//更新平衡因子
                         }
                     }
-                    cur->_left->_parent = parent;//更新父节点
+                    if(cur->_left)
+                        cur->_left->_parent = parent;//更新父节点
                     delete cur;
                 }
                 else {
@@ -309,13 +383,13 @@ namespace MY_STL{
                     if(rm_parent->_left==right_min){
                         rm_parent->_left=right_min->_right;
                         parent->_bf++;//更新平衡因子
-
                     }
                     else{
                         rm_parent->_right=right_min->_right;//极端情况：right_min在rm_parent
                         parent->_bf--;//更新平衡因子
                     }
-                    right_min->_right->_parent=rm_parent;//更新父节点
+                    if(right_min->_right)
+                        right_min->_right->_parent=rm_parent;//更新父节点
                     delete right_min;
                 }
             }
@@ -342,23 +416,27 @@ namespace MY_STL{
                 }
                 //bf=+-2,则前bf=+-1，即delete较低子树，从而此树出现不平衡，须旋转调整
                 else if(cur->_bf==2||cur->_bf==-2){
-                    //不平衡调整
+                    //不平衡调整---此处不能break，因为可能需要继续向上更新祖先bf
                     if(cur->_bf==2){
                         if(cur->_right->_bf==1)
                             rotate_L(cur);//左单旋
                         else if(cur->_right->_bf==-1)
                             rotate_RL(cur);//右左双旋
+                        else//cur->_right->_bf==0
+                            rotate_Ld(cur);//左单旋
                     }
                     if(cur->_bf==-2){
                         if(cur->_left->_bf==-1)
                             rotate_R(cur);//右单旋
                         else if(cur->_left->_bf==1)
                             rotate_LR(cur);//左右双旋
-                    }
-                    break;
+                        else//cur->_left->_bf==0
+                            rotate_Rd(cur);//右单旋
+                    }   
                 }
             }
-
+            _size--;
+            return true;
          }
         //查---find
         N_ptr find(const value_type& kv){
@@ -385,6 +463,10 @@ namespace MY_STL{
                 return;
             inorder(root->_left);
             cout<<root->_kv._first<<":"<<root->_bf<<endl;
+            if (root->_bf > 1 || root->_bf < -1) {
+                cout << "unbalanced" << endl;
+                exit(1);
+            }
             inorder(root->_right);
         }
         //preorder traverse
@@ -393,7 +475,12 @@ namespace MY_STL{
         N_ptr root()const{
             return _root;
         }
+        //size
+        size_t size()const {
+            return _size;
+        }
         private:
             N_ptr _root;
+            size_t _size;
     };
 }
