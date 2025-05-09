@@ -4,31 +4,26 @@
 //平衡二叉树：任意节点的左右子树高度差不超过1的特殊搜索二叉树
 
 namespace MY_STL{
-    template<class T,class V>
+    template<class K,class V>
     struct m_pair{
-        //using Self=m_pair<T,V>;
-        T _first;
+        using Self=m_pair<K,V>;
+        K _first;
         V _second;
-        m_pair(const T& t=T(),const V& v=V()):_first(t),_second(v){}
-        m_pair(const Self& p) :first(p.first), second(p.second) {}
+        m_pair(const K& t=K(),const V& v=V()):_first(t),_second(v){}
+        m_pair(const Self& p) :_first(p._first),_second(p._second) {}
         Self& operator=(const Self& p) {
             if (this != &p) {
-                first = p.first;
-                second = p.second;
+                _first = p._first;
+                _second = p._second;
             }
-            return this;
+            return *this;
         }
         //relational operator
-        bool operator==(const Self& p)const {
-            return _second == p.second;
-        }
-        bool operator<
-
-
     };
-    template<class K>
+    template<class K,class V>
     struct AVLTreeNode{
-        K _key;
+        using value_type=m_pair<K,V>;
+        value_type _kv;//关键字---实际为某一类值，用作标记
         //旋转操作需要父节点
         AVLTreeNode* _parent;
         //左右子节点
@@ -56,12 +51,13 @@ namespace MY_STL{
         //case2:bf=+-1，则前bf=0,无论delete左/右子树，此树都会高度不变，无须向上更新祖先bf
         //case3:bf=+-2,则前bf=+-1，即delete较低子树，从而此树出现不平衡，须旋转调整
         int _bf;//平衡因子
-        AVLTreeNode(const K& key=K()):_key(key),_parent(nullptr),_left(nullptr),_right(nullptr),_bf(0){}
+        AVLTreeNode(const value_type& kv=value_type()):_kv(kv),_parent(nullptr),_left(nullptr),_right(nullptr),_bf(0){}
     };
-    template<class K>
+    template<class K,class V>
     class AVLTree{
         public:
-        using Node=AVLTreeNode<K>;
+        using value_type=m_pair<K,V>; 
+        using Node=AVLTreeNode<K,V>;
         using N_ptr=Node*;
         using N_ref=Node&;
 
@@ -78,9 +74,9 @@ namespace MY_STL{
         //         cout<<"error: parent or son is nullptr"<<endl;
         //         return false;
         //     }
-        //     if(son->_key<parent->_key)
+        //     if(son->_kv._first<parent->_kv._first)
         //         return true;
-        //     else if(son->_key>parent->_key)
+        //     else if(son->_kv._first>parent->_kv._first)
         //         return false;
         //     else{
         //         cout<<"error: son is same as parent"<<endl;
@@ -183,9 +179,9 @@ namespace MY_STL{
         }
         //增---add
         //按BSTree插入+更新parent+更新bf+不平衡调整
-        bool insert(const K& key){
+        bool insert(const value_type& kv){
            //按BSTree插入+更新parent+更新bf
-            N_ptr newNode=new Node(key);
+            N_ptr newNode=new Node(kv);
 
             N_ptr parent=nullptr;
             N_ptr cur=_root;
@@ -195,11 +191,11 @@ namespace MY_STL{
             }
             else{
                 while(cur){
-                    if(key<cur->_key){
+                    if(kv._first<cur->_kv._first){
                         parent=cur;
                         cur=cur->_left;
                     }
-                    else if(key>cur->_key){
+                    else if(kv._first>cur->_kv._first){
                         parent=cur;
                         cur=cur->_right;
                     }
@@ -209,7 +205,7 @@ namespace MY_STL{
                     }
                 }
             }
-            if(parent->_key>newNode->_key){
+            if(parent->_kv._first>newNode->_kv._first){
                 parent->_left=newNode;
                 parent->_bf--;//更新平衡因子
             }
@@ -257,74 +253,129 @@ namespace MY_STL{
         }   
         //删---delete
         //按BSTree删除+更新parent+更新bf+不平衡调整
-         bool erase(const K& key){
-             //按BSTree删除+更新parent
-             N_ptr parent=nullptr;
-             N_ptr cur=_root;
-             //来到带删除的节点
-             while (cur) {
-                 if (key < cur->_key) {
-                    parent = cur;
-                    cur = cur->_left;
-                 }
-                 else if (key > cur->_key) {
-                     parent = cur;
-                     cur = cur->_right;
-                 }
-                 else
-                     break;
-             }
-             if (cur == nullptr)
-                 return fasle;
-             else {
-                 if (cur->_left == nullptr) {
-                     if(cur==_root)
-                         _root=cur->_right;
-                     else {
-                         if (parent->_left == cur)
-                             parent->_left = cur->_right;
-                         else
-                             parent->_right = cur->_right;
-                     }
-                     cur->_right->_parent=parent;//更新父节点
-                     delete cur;
-                 }
-                 else if (cur->_right == nullptr) {
-                     if (cur == _root)
-                         _root = cur->_left;
-                     else {
-                         if (parent->_left == cur)
-                             parent->_left = cur->_left;
-                         else
-                             parent->_right = cur->_left;
-                     }
-                     cur->_left->_parent = parent;//更新父节点
-                     delete cur;
-                 }
-                 else {
-                     //找到右子树最小值
-                     N_ptr right_min = cur->_right;
-                     N_prt rm_parent = cur;
-                     while (right_min->_left) {
-                         rm_parent = right_min;
-                         right_min=right_min->_left;
-                     }
-                     //更改cur---从而删除节点转换为right_min
-                     cur->_key = right_min->_key;
-                     
-                     if(rm_parent->_left==right_min)
-                         rm_parent->_left=right_min->_right;
-                     else
-                         rm_parent->_right=right_min->_right;//极端情况：right_min在rm_parent
-                     right_min->_right->_parent=rm_parent;//更新父节点
-                     delete right_min;
-                 }
-             }
+         bool erase(const value_type& kv){
+            //查找待删除节点
+            N_ptr cur=find(kv);
+        
+            //按BSTree删除+更新parent
+            N_ptr parent=cur->_parent;
+            if (cur == nullptr)
+                return false;
+            else {
+                if (cur->_left == nullptr) {
+                    if(cur==_root)
+                        _root=cur->_right;
+                    else {
+                        if (parent->_left == cur){
+                            parent->_left = cur->_right;
+                            parent->_bf++;//更新平衡因子
+                        }
+                        else{
+                            parent->_right = cur->_right;
+                            parent->_bf--;//更新平衡因子
+                        }
+                    }
+                    cur->_right->_parent=parent;//更新父节点
+                    delete cur;
+                }
+                else if (cur->_right == nullptr) {
+                    if (cur == _root)
+                        _root = cur->_left;
+                    else {
+                        if (parent->_left == cur){
+                            parent->_left = cur->_left;
+                            parent->_bf++;//更新平衡因子
+                        }
+                        else{
+                            parent->_right = cur->_left;
+                            parent->_bf--;//更新平衡因子
+                        }
+                    }
+                    cur->_left->_parent = parent;//更新父节点
+                    delete cur;
+                }
+                else {
+                    //找到右子树最小值
+                    N_ptr right_min = cur->_right;
+                    N_ptr rm_parent = cur;
+                    while (right_min->_left) {
+                        rm_parent = right_min;
+                        right_min=right_min->_left;
+                    }
+                    //更改cur---从而删除节点转换为right_min
+                    cur->_kv = right_min->_kv;
+                    
+                    parent=rm_parent;//用于后续更新bf
+                    if(rm_parent->_left==right_min){
+                        rm_parent->_left=right_min->_right;
+                        parent->_bf++;//更新平衡因子
 
-             //更新bf+不平衡调整
+                    }
+                    else{
+                        rm_parent->_right=right_min->_right;//极端情况：right_min在rm_parent
+                        parent->_bf--;//更新平衡因子
+                    }
+                    right_min->_right->_parent=rm_parent;//更新父节点
+                    delete right_min;
+                }
+            }
+
+            //继续更新bf+不平衡调整
+            cur=parent;
+            parent=cur->_parent;
+            while(cur){
+                //bf=0,则前bf=+-1,即delete较高子树，从而此树高度-1，须向上更新祖先bf
+                if(cur->_bf==0){
+                    if(parent==nullptr)
+                        break;
+                    if(parent->_left==cur)
+                        parent->_bf++;
+                    else
+                        parent->_bf--;
+                    cur=parent;
+                    parent=cur->_parent;
+
+                }
+                //bf=+-1，则前bf=0,无论delete左/右子树，此树都会高度不变，无须向上更新祖先bf
+                else if(cur->_bf==1||cur->_bf==-1){
+                    break;
+                }
+                //bf=+-2,则前bf=+-1，即delete较低子树，从而此树出现不平衡，须旋转调整
+                else if(cur->_bf==2||cur->_bf==-2){
+                    //不平衡调整
+                    if(cur->_bf==2){
+                        if(cur->_right->_bf==1)
+                            rotate_L(cur);//左单旋
+                        else if(cur->_right->_bf==-1)
+                            rotate_RL(cur);//右左双旋
+                    }
+                    if(cur->_bf==-2){
+                        if(cur->_left->_bf==-1)
+                            rotate_R(cur);//右单旋
+                        else if(cur->_left->_bf==1)
+                            rotate_LR(cur);//左右双旋
+                    }
+                    break;
+                }
+            }
 
          }
         //查---find
+        N_ptr find(const value_type& kv){
+            if(_root==nullptr){
+                return nullptr;
+            }
+            N_ptr cur=_root;
+            while(cur){
+                if(kv._first<cur->_kv._first)
+                    cur=cur->_left;
+                else if(kv._first>cur->_kv._first)
+                    cur=cur->_right;
+                else
+                    return cur;
+            }
+            return nullptr;
+        }
         //改---modify,传递pair对象，pair.first为key---不可改，pair.second为val---可改
 
         //traverse
@@ -333,7 +384,7 @@ namespace MY_STL{
             if(root==nullptr)
                 return;
             inorder(root->_left);
-            cout<<root->_key<<":"<<root->_bf<<endl;
+            cout<<root->_kv._first<<":"<<root->_bf<<endl;
             inorder(root->_right);
         }
         //preorder traverse

@@ -644,47 +644,48 @@ void list_test_r_iterator(){
 
 
 
-struct TreeNode {
-    int val;
-    TreeNode* left;
-    TreeNode* right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+// struct TreeNode {
+//     int val;
+//     TreeNode* left;
+//     TreeNode* right;
+//     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+// };
 
 
 
-class Solution {
-public:
-    bool is_left(TreeNode* lt, TreeNode* s) {
-        if (lt == nullptr)
-            return false;
-        return lt == s || is_left(lt->left, s) || is_left(lt->right, s);
-    }
-    //case1: pq各在cur左右子树 cur为共同祖先
-    //case2：pq皆在左子树或右子树，前往对应子树判定 
-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==p||root==q)
-            return root;
-        bool a = is_left(root->left, p);
-        bool b = is_left(root->left, q);
-        if (a != b)
-            return root;
-        else if (a && b) {
-            return lowestCommonAncestor(root->left, p, q);
-        }
-        else {
-            return lowestCommonAncestor(root->right, p, q);
-        }
+// class Solution {
+// public:
+//     bool is_left(TreeNode* lt, TreeNode* s) {
+//         if (lt == nullptr)
+//             return false;
+//         return lt == s || is_left(lt->left, s) || is_left(lt->right, s);
+//     }
+//     //case1: pq各在cur左右子树 cur为共同祖先
+//     //case2：pq皆在左子树或右子树，前往对应子树判定 
+//     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//         if(root==p||root==q)
+//             return root;
+//         bool a = is_left(root->left, p);
+//         bool b = is_left(root->left, q);
+//         if (a != b)
+//             return root;
+//         else if (a && b) {
+//             return lowestCommonAncestor(root->left, p, q);
+//         }
+//         else {
+//             return lowestCommonAncestor(root->right, p, q);
+//         }
 
-    }
-};
+//     }
+// };
 
 
 void test_AVLTree(){
-    int arr[1000];
-    random_generate(arr,1000);
-    AVLTree<int> avltree;
-    for (int i = 0; i < 1000; i++) {
+    const int N=20;
+    int arr[N];
+    random_generate(arr,N);
+    AVLTree<int,int> avltree;
+    for (int i = 0; i < N; i++) {
         avltree.insert(arr[i]);
     }
 
@@ -692,7 +693,15 @@ void test_AVLTree(){
     cout << "Inorder Traversal: ";
     avltree.inorder(avltree.root());
     cout << endl;
-    AVLTree<int>::N_ptr tmp=avltree.root();
+
+    avltree.erase(arr[0]);
+    avltree.erase(arr[5]);
+    avltree.erase(arr[10]);
+
+    cout << "Inorder Traversal: ";
+    avltree.inorder(avltree.root());
+    cout << endl;
+    AVLTree<int,int>::N_ptr tmp=avltree.root();
 
     cout<<"balanced? : "<<(int)avltree.height(tmp->_left)-(int)avltree.height(tmp->_right)<<endl;
 }
