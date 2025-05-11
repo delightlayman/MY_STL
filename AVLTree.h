@@ -1,34 +1,21 @@
 #pragma once
 #include "MY_STL.h"
+#include "pair.h"
 //AVLtree树---平衡二叉树
 //平衡二叉树：任意节点的左右子树高度差不超过1的特殊搜索二叉树
 
 namespace MY_STL{
-    template<class K,class V>
-    struct m_pair{
-        using Self=m_pair<K,V>;
-        K _first;
-        V _second;
-        m_pair(const K& t=K(),const V& v=V()):_first(t),_second(v){}
-        m_pair(const Self& p) :_first(p._first),_second(p._second) {}
-        Self& operator=(const Self& p) {
-            if (this != &p) {
-                _first = p._first;
-                _second = p._second;
-            }
-            return *this;
-        }
-        //relational operator
-    };
+
     template<class K,class V>
     struct AVLTreeNode{
         using value_type=m_pair<K,V>;
+        using Self=AVLTreeNode<K,V>;
         value_type _kv;//关键字---实际为某一类值，用作标记
         //旋转操作需要父节点
-        AVLTreeNode* _parent;
+        Self* _parent;
         //左右子节点
-        AVLTreeNode* _left;
-        AVLTreeNode* _right;
+        Self* _left;
+        Self* _right;
         //平衡因子 balance factor：右子树高度-左子树高度 即：bf=hr-hl ---树高度 h=max(hr,hl)+1
         //平衡因子有三种情况： 
         //case1:bf=0,左右高度相等---平衡

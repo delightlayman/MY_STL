@@ -18,7 +18,7 @@ namespace MY_STL{
 
     };
 
-    //迭代器
+    //迭代器---简单版
     template<class T>
     struct list_iterator{
         //iterator存储的值------Node* ptr
@@ -97,6 +97,7 @@ namespace MY_STL{
         list_iterator_base(Node* p=nullptr):_ptr(p){}
         //自身的复制构造------与下方存在定义重叠部分，冲突
         //list_iterator_base(const Self& it):_ptr(it._ptr){}
+        
         //iterator可构造iterator以及const_iterator，但是const_iterator不可构造iterator
         list_iterator_base(const iterator& it):_ptr(it._ptr){}
 

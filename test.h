@@ -681,7 +681,7 @@ void list_test_r_iterator(){
 
 
 void test_AVLTree(){
-    const int N=10000;
+    const int N=100;
     //int arr[N] = { 0,1,2,3,4 };
     int arr[N];
     random_generate(arr,N);

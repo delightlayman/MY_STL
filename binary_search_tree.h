@@ -119,6 +119,7 @@ namespace MY_STL{
                     delete cur;
                 }
                 else {
+                    //本质：用 中序遍历的 前驱或后继节点替换cur
                     //用右子树的最小值---最左节点替换cur
                     //case1：最左节点无子树
                     //case2：最左节点有右子树
