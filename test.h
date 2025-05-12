@@ -701,9 +701,5 @@ void test_AVLTree(){
 
     cout << "Inorder Traversal: "<<endl;
     avltree.inorder(avltree.root());
-    cout << avltree.size() << endl;
-
-    AVLTree<int,int>::N_ptr tmp=avltree.root();
-
-    cout<<"balanced? : "<<(int)avltree.height(tmp->_left)-(int)avltree.height(tmp->_right)<<endl;
+    cout << avltree.size() << endl<<"Inorder Traverse complete"<<endl;
 }

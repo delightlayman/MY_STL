@@ -49,8 +49,22 @@ namespace MY_STL{
         using Node=AVLTreeNode<K,V>;
         using N_ptr=Node*;
         using N_ref=Node&;
-
+        //默认构造
         AVLTree():_root(nullptr), _size(0){}
+        //析构函数
+        void clear(N_ptr root){
+            if(root==nullptr)
+                return;
+            if(root->_left)
+                clear(root->_left);
+            if(root->_right)
+                clear(root->_right);
+            delete root;
+            root=nullptr;
+        }
+        ~AVLTree(){
+            clear(_root);
+        }
         //高度
         size_t height(N_ptr root)const{
             if(root==nullptr)
@@ -308,6 +322,7 @@ namespace MY_STL{
                     break;
                 }
             }
+            return true;
         }   
         //删---delete
         //按BSTree删除+更新parent+更新bf+不平衡调整
@@ -363,7 +378,7 @@ namespace MY_STL{
                         rm_parent = right_min;
                         right_min=right_min->_left;
                     }
-                    //更改cur---从而删除节点转换为right_min
+                    //更改cur值---从而删除节点转换为right_min
                     cur->_kv = right_min->_kv;
                     
                     parent=rm_parent;//用于后续更新bf
