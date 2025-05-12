@@ -6,6 +6,8 @@
 #include "iterator_adapter.h"
 #include "binary_search_tree.h"
 #include "AVLTree.h"
+#include "Red_Black_Tree.h"
+#include "pair.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -23,6 +25,10 @@ using MY_STL::more;
 //tree
 using MY_STL::BSTree;
 using MY_STL::AVLTree;
+using MY_STL::RBTree;
+//pair
+using MY_STL::m_pair;
+using MY_STL::make_m_pair;
 
 inline void random_generate(int arr[], size_t n) {
     srand(time(0));
@@ -702,4 +708,18 @@ void test_AVLTree(){
     cout << "Inorder Traversal: "<<endl;
     avltree.inorder(avltree.root());
     cout << avltree.size() << endl<<"Inorder Traverse complete"<<endl;
+}
+
+void test_RBTree(){
+    RBTree<int,int> rbttree;
+    rbttree.insert(make_m_pair<int,int>(1));
+    rbttree.insert(make_m_pair<int,int>(2));
+    rbttree.insert(make_m_pair<int,int>(3));
+    rbttree.insert(make_m_pair<int,int>(4));
+    rbttree.insert(make_m_pair<int,int>(5));
+    rbttree.insert(make_m_pair<int,int>(6));
+    rbttree.insert(make_m_pair<int,int>(7));
+    rbttree.insert(make_m_pair<int,int>(8));
+
+    rbttree.inorder(rbttree.root());
 }

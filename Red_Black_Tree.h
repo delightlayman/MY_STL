@@ -369,7 +369,7 @@ namespace MY_STL{
             if(root==nullptr)
                 return;
             inorder(root->_left);
-            cout<<root->_kv._first<<<<endl;
+            cout<<root->_kv._first<<" "<<endl;
             inorder(root->_right);
         }
         //preorder traverse
