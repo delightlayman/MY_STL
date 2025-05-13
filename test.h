@@ -711,15 +711,129 @@ void test_AVLTree(){
 }
 
 void test_RBTree(){
-    RBTree<int,int> rbttree;
-    rbttree.insert(make_m_pair<int,int>(1));
-    rbttree.insert(make_m_pair<int,int>(2));
-    rbttree.insert(make_m_pair<int,int>(3));
-    rbttree.insert(make_m_pair<int,int>(4));
-    rbttree.insert(make_m_pair<int,int>(5));
-    rbttree.insert(make_m_pair<int,int>(6));
-    rbttree.insert(make_m_pair<int,int>(7));
-    rbttree.insert(make_m_pair<int,int>(8));
+    RBTree<int,int> rbtree;
+    rbtree.insert(make_m_pair(1));
+    rbtree.insert(make_m_pair(2));
+    rbtree.insert(make_m_pair(3));
+    rbtree.insert(make_m_pair(4));
+    rbtree.insert(make_m_pair(5));
+    rbtree.insert(make_m_pair(6));
+    rbtree.insert(make_m_pair(7));
+    rbtree.insert(make_m_pair(8));
+    rbtree.insert(make_m_pair(9));
 
-    rbttree.inorder(rbttree.root());
+    cout << "insert dates :" << endl;
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout<<"inorder traverse complete"<<endl;
+    
+    cout<<"erase dates :" << endl;
+    rbtree.erase(1);
+    rbtree.inorder(rbtree.root());
+    cout<<"RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+
+    rbtree.erase(1);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+
+    rbtree.erase(2);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+
+    rbtree.erase(3);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+
+    rbtree.erase(4);
+    rbtree.erase(5);
+    rbtree.erase(6);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+    rbtree.erase(7);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+    rbtree.erase(8);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+    rbtree.erase(9);
+    rbtree.inorder(rbtree.root());
+    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "inorder traverse complete" << endl;
+
+
+}
+void test_RBTree_1() {
+    const int N = 10;
+    int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+    RBTree<int, int> rbtree;
+    for (int i = 0; i < N; ++i) {
+        rbtree.insert(arr[i]);
+    }
+    cout << "insert dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
+    for (int i = 0; i < N; ++i) {
+        rbtree.erase(arr[i]);
+        cout << "erase dates number_" <<i <<":"<<arr[i] << endl;
+        rbtree.inorder();
+        cout << "RBTree size:" << rbtree.size() << endl;
+    }
+
+    cout << "erase dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+}
+void test_RBTree_2() {
+    const int N = 10000;
+    int arr[N];
+
+    RBTree<int, int> rbtree;
+    for (int i = 0; i < N; ++i) {
+        rbtree.insert(i);
+    }
+    cout << "insert dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
+    for (int i = 0; i < N; ++i) {
+        rbtree.erase(i);
+    }
+    
+    cout << "erase dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
+}
+
+
+
+void test_RBTree_3() {
+    const int N = 20000;
+    int arr[N];
+    random_generate(arr, N);
+
+    RBTree<int, int> rbtree;
+    for (int i = 0; i < N; ++i) {
+        rbtree.insert(arr[i]);
+    }
+    cout << "insert dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
+    for (int i = 0; i < N; ++i) {
+        rbtree.erase(arr[i]);
+    }
+
+    cout << "erase dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
 }

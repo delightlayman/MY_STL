@@ -1,7 +1,7 @@
 #pragma once
 
 namespace MY_STL{
-    template<class K,class V>
+    template<class K=int,class V=int>
     struct m_pair{
         using Self=m_pair<K,V>;
         K _first;
@@ -17,7 +17,7 @@ namespace MY_STL{
         }
         //relational operator
     };
-    template<class K,class V>
+    template<class K=int,class V=int>
     m_pair<K,V> make_m_pair(const K& k=K(),const V& v=V()){
         return m_pair<K,V>(k,v);
     }
@@ -29,7 +29,7 @@ namespace MY_STL{
     }
 
     template<class K,class V>
-    bool operator>(const m_pair<K,V>& p1,const m_pair<K,V>& p2){
+    bool operator>(const m_pair<K,V>& p1,const m_pair<K,V>& p2){  
         return p1._first>p2._first;
     }
     //==,!=

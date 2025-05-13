@@ -46,6 +46,9 @@ int main(){
     // cout<<(s.lowestCommonAncestor(a, b, i))->val;
 
     //test_AVLTree();
-    test_RBTree();
+    //test_RBTree();
+    //test_RBTree_1();
+    //test_RBTree_2();
+    test_RBTree_3();
     return 0;
 }

@@ -10,8 +10,8 @@
 namespace MY_STL{
     enum Node_Color{ Red,Black };
     template<class K,class V>
-    class RBTreeNode{
-        using value_type=m_pair<K,v>;
+    struct RBTreeNode{
+        using value_type=m_pair<K,V>;
         using Self=RBTreeNode<K,V>;
         value_type _kv;
         Node_Color _color;
@@ -154,8 +154,8 @@ namespace MY_STL{
             if(newnode!=_root){
                 N_ptr parent=newnode->_parent;
                 if(parent->_color==Black)//case1:新增节点为 黑节点 的子节点---包括根节点情况
-                    return true;
-                while(parent!=nullptr||parent->_color==Red){//父节点存在且为红，此时gp一定存在
+                    return;
+                while(parent!=nullptr&&parent->_color==Red){//父节点存在且为红，此时gp一定存在
                     N_ptr gp=parent->_parent;//祖父节点
                     
                     if(gp->_left==parent){
@@ -163,7 +163,7 @@ namespace MY_STL{
                         if(uncle!=nullptr&&uncle->_color==Red){//case2:叔节点为红色
                             parent->_color=Black;
                             uncle->_color=Black;
-                            gp->__color=Red;
+                            gp->_color=Red;
                             //更新cur，parent，继续向上调整
                             newnode=gp;
                             parent=newnode->_parent;
@@ -207,15 +207,17 @@ namespace MY_STL{
         }
         //delete
         void adjust_delete_node(N_ptr& d_node){
-            //双子节点调整---调整后，子节点数为1或0
+            //双子节点调整---删除节点替换为后继节点
+            //调整后，子节点数为1或0
             if(d_node->_left&&d_node->_right){
-                n_ptr substitute=d_node->_right;
+                N_ptr substitute=d_node->_right;
                 while(substitute->_left)
                     substitute=substitute->_left;
                 d_node->_kv=substitute->_kv;//改变当前删除节点的值
                 d_node=substitute;//删除节点改为替代节点
             }
-            // //黑节点调整----若有son，则son必为红且无子节点,则删除节点改为son，即转换为删除红节点
+            //双子节点调整后---进行黑子节点调整
+            //黑节点调整----若有son，则son必为红且无子节点,则删除节点替换为son，即转换为删除红节点
             if(d_node->_color==Black){
                 if(d_node->_right!=nullptr){
                     N_ptr child=d_node->_right;
@@ -242,7 +244,7 @@ namespace MY_STL{
                     d_node->_right->_parent=parent;//更新父节点
             }
             else if(d_node->_right==nullptr){
-                if(parebt->_left==d_node)
+                if(parent->_left==d_node)
                     parent->_left=d_node->_left;
                 else
                     parent->_right=d_node->_left;
@@ -250,88 +252,96 @@ namespace MY_STL{
                     d_node->_left->_parent=parent;//更新父节点
             }
             delete d_node;
-            d_node=nullptr;
-            _size--;//更新大小
+            --_size;//更新大小
         }
         //删除黑色节点---破坏红黑树性质,须调整
         //仅针对无子黑节点的情况
         void delete_Black(N_ptr d_node){
-            if(d_node==_root){
+            
+            if (d_node == _root) {//删除节点为根节点
                 delete _root;
-                _root=nullptr;
-            }else{
-                N_ptr parent=d_node->_parent;//父节点
-                N_ptr cur=d_node;//用于向上更新
-                //sib 兄弟姐妹节点，由RBSTree树的性质，此节点必然存在，颜色不定
-                N_ptr sib=nullptr;
-                N_ptr sib_son=nullptr;
-                //循环中的d_node依然为黑色
-                while(cur&&cur!=_root){
-                    if(parent->_left==cur){
-                        sib=parent->_right;
-                        if(sib->_color==Red){//case1：sib为红，此时必有两个黑子节点
-                            rotate_L(parent);
-                            //把变色留在下一循环
-                        }
-                        else{//sib->_cloor==Black  sib为黑，子节点若存在，必然为红
-                            if(sib->_right!=nullptr){//case2:sib右子节点为红
-                                sib_son=sib->_right;
-                                rotate_L(parent);
-                                sib_son->_color=Black;
-                                break;
-                            }
-                            else if(sib->_left!=nullptr){//case3:sib左子节点为红
-                                sib_son=sib->_left;
-                                rotate_RL(parent);
-                                break;
-                            }
-                            else{// sib无子节点
-                                sib->_color=Red;
-                                if(parent->_color==Red){//case4：父节点为红
-                                    parent->_color=Black;
-                                    break;
-                                }
-                                else{//case5：父节点为黑
-                                    //向上更新
-                                    cur=parent;
-                                    parent=cur->_parent;
-                                }
-                            }
-                        }
+                _root = nullptr;
+                _size = 0;
+                return;
+            }
 
+            N_ptr parent = d_node->_parent;//父节点
+            N_ptr cur = d_node;//用于向上更新
+            //sib 兄弟姐妹节点，由RBSTree树的性质，此节点必然存在，颜色不定
+            N_ptr sib = nullptr;
+            //循环中的d_node依然为黑色
+            while (cur != _root) {
+                if (parent->_left == cur) {
+                    sib = parent->_right;
+                    if (sib->_color == Red) {//case1：sib为红，此时必有两个黑子节点
+                        rotate_L(parent);
+                        //把变色留在下一循环
                     }
-                    else{
-                        sib=parent->_left;
-                        if(sib->_color==Red)//case1：sib为红，此时必有两个黑子节点
+                    else {//sib->_cloor==Black
+                        if (sib->_right != nullptr && sib->_right->_color == Red) {//case2:sib右子节点存在且为红
+                            rotate_L(parent);
+                            sib->_right->_color = Black;//此处为sib_son颜色
+                            break;
+                        }
+                        else if (sib->_left != nullptr && sib->_left->_color == Red) {//case3:sib左子节点存在且为红
+                            rotate_RL(parent);
+                            sib->_color = Black;//注意此处为sib颜色
+                            break;
+                        }
+                        else {// sib无子节点或双黑子节点
+                            sib->_color = Red;
+                            if (parent->_color == Red) {//case4：父节点为红
+                                parent->_color = Black;
+                                break;
+                            }
+                            else {//case5：父节点为黑
+                                //向上更新
+                                cur = parent;
+                                parent = cur->_parent;
+                            }
+                        }
+                    }
+                }
+                else {
+                    sib = parent->_left;
+                    if (sib->_color == Red)//case1：sib为红，此时必有两个黑子节点
+                        rotate_R(parent);
+                    else {//sib->_cloor==Black  
+                        if (sib->_left != nullptr && sib->_left->_color == Red) {//case1:sib左子节点存在且为红
                             rotate_R(parent);
-                        else{//sib->_cloor==Black  sib为黑，子节点若存在，必然为红
-                            if(sib->_left!=nullptr){//case1:sib左子节点为红
-                                sib_son=sib->_left;
-                                rotate_R(parent);
-                                sib_son->_color=Black;
+                            sib->_left->_color = Black;//此处为sib_son颜色
+                            break;
+                        }
+                        else if (sib->_right != nullptr && sib->_right->_color == Red) {//case3:sib右子节点存在且为红
+                            rotate_LR(parent);
+                            sib->_color = Black;//注意此处为sib颜色
+                            break;
+                        }
+                        else {// sib无子节点或双黑子节点
+                            sib->_color = Red;
+                            if (parent->_color == Red) {//case4：父节点为红
+                                parent->_color = Black;
                                 break;
                             }
-                            else if(sib->_right!=nullptr){//case3:sib右子节点为红
-                                sib_son=sib->_right;
-                                rotate_LR(parent);
-                                break;
-                            }
-                            else{// sib无子节点
-                                sib->_color=Red;
-                                if(parent->_color==Red){//case4：父节点为红
-                                    parent->_color=Black;
-                                    break;
-                                }
-                                else{//case5：父节点为黑
-                                    //向上更新
-                                    cur=parent;
-                                    parent=cur->_parent;
-                                }
+                            else {//case5：父节点为黑
+                                //向上更新
+                                cur = parent;
+                                parent = cur->_parent;
                             }
                         }
                     }
                 }
             }
+
+            parent=d_node->_parent;
+            if (parent != nullptr) {//父节点非空，则更新父节点中d_node所在位置
+                if(parent->_left==d_node)
+                    parent->_left=nullptr;
+                else
+                    parent->_right=nullptr;
+            }
+            delete d_node;//删除节点
+            --_size;//更新大小
         }
         bool erase(const value_type& kv){
             N_ptr d_node=find(kv);
@@ -341,7 +351,7 @@ namespace MY_STL{
             else
                 adjust_delete_node(d_node);
 
-            if(cur->_color==Red)
+            if(d_node->_color==Red)
                 delete_Red(d_node);
             else
                 delete_Black(d_node);
@@ -369,8 +379,12 @@ namespace MY_STL{
             if(root==nullptr)
                 return;
             inorder(root->_left);
-            cout<<root->_kv._first<<" "<<endl;
+            cout<<root->_kv._first<<":"<<root->_color<<endl;
             inorder(root->_right);
+        }
+        //重载inorder 无参数版本
+        void inorder()const {
+            inorder(_root);
         }
         //preorder traverse
         //postorder traverse
