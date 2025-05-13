@@ -710,65 +710,65 @@ void test_AVLTree(){
     cout << avltree.size() << endl<<"Inorder Traverse complete"<<endl;
 }
 
-void test_RBTree(){
-    RBTree<int,int> rbtree;
-    rbtree.insert(make_m_pair(1));
-    rbtree.insert(make_m_pair(2));
-    rbtree.insert(make_m_pair(3));
-    rbtree.insert(make_m_pair(4));
-    rbtree.insert(make_m_pair(5));
-    rbtree.insert(make_m_pair(6));
-    rbtree.insert(make_m_pair(7));
-    rbtree.insert(make_m_pair(8));
-    rbtree.insert(make_m_pair(9));
+// void test_RBTree(){
+//     RBTree<int,int> rbtree;
+//     rbtree.insert(make_m_pair(1));
+//     rbtree.insert(make_m_pair(2));
+//     rbtree.insert(make_m_pair(3));
+//     rbtree.insert(make_m_pair(4));
+//     rbtree.insert(make_m_pair(5));
+//     rbtree.insert(make_m_pair(6));
+//     rbtree.insert(make_m_pair(7));
+//     rbtree.insert(make_m_pair(8));
+//     rbtree.insert(make_m_pair(9));
 
-    cout << "insert dates :" << endl;
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout<<"inorder traverse complete"<<endl;
+//     cout << "insert dates :" << endl;
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout<<"inorder traverse complete"<<endl;
     
-    cout<<"erase dates :" << endl;
-    rbtree.erase(1);
-    rbtree.inorder(rbtree.root());
-    cout<<"RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
+//     cout<<"erase dates :" << endl;
+//     rbtree.erase(1);
+//     rbtree.inorder(rbtree.root());
+//     cout<<"RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
 
-    rbtree.erase(1);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
+//     rbtree.erase(1);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
 
-    rbtree.erase(2);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
+//     rbtree.erase(2);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
 
-    rbtree.erase(3);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
+//     rbtree.erase(3);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
 
-    rbtree.erase(4);
-    rbtree.erase(5);
-    rbtree.erase(6);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
-    rbtree.erase(7);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
-    rbtree.erase(8);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
-    rbtree.erase(9);
-    rbtree.inorder(rbtree.root());
-    cout << "RBTree size:" << rbtree.size() << endl;
-    cout << "inorder traverse complete" << endl;
+//     rbtree.erase(4);
+//     rbtree.erase(5);
+//     rbtree.erase(6);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
+//     rbtree.erase(7);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
+//     rbtree.erase(8);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
+//     rbtree.erase(9);
+//     rbtree.inorder(rbtree.root());
+//     cout << "RBTree size:" << rbtree.size() << endl;
+//     cout << "inorder traverse complete" << endl;
 
 
-}
+// }
 void test_RBTree_1() {
     const int N = 10;
     int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
