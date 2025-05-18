@@ -15,12 +15,13 @@ namespace MY_STL{
             }
             return *this;
         }
-        //relational operator
+
     };
     template<class K=int,class V=int>
     m_pair<K,V> make_m_pair(const K& k=K(),const V& v=V()){
         return m_pair<K,V>(k,v);
     }
+    //relational operator
     //若无需访问私有成员，可重载的运算符中，除=,(),[],->外，其他运算符重载函数可声明并定义在类外
     //<,>
     template<class K,class V>

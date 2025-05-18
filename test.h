@@ -20,8 +20,6 @@ using MY_STL::m_stack;
 using MY_STL::m_queue;
 using MY_STL::m_priority_queue;
 using MY_STL::m_reverse_iterator;
-using MY_STL::less;
-using MY_STL::more;
 //tree
 using MY_STL::BSTree;
 using MY_STL::AVLTree;

@@ -222,9 +222,7 @@ namespace MY_STL {
                 tmp[i]=_start[i];
             delete[] _start;
         }
-        _start = tmp;
-        _finish = _start + si;
-        _end_of_storage = _start + n;
+ 
     }
 
     //add

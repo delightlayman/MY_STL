@@ -33,15 +33,6 @@ namespace MY_STL{
             Container _con;
 
     };
-    //函数对象=函数指针+函数符+lambda
-    template<class T>
-    struct  less{
-        bool operator()(const T& a,const T& b){ return a<b;}
-    };
-    template<class T>
-    struct  more{
-        bool operator()(const T& a,const T& b){ return a>b;}
-    };
         
     //适用---vector
     //默认---建大堆
