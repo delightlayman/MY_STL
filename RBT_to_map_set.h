@@ -112,7 +112,7 @@ namespace MY_STL{
     //K---key
     //T---数据类型
     template<class K,class T,class KOfT,class Key_compare=less<K>>
-    class RBTree{
+    class RBTree_base{
         public:
         using value_type=T;K_
         using key_type=K;
@@ -128,7 +128,7 @@ namespace MY_STL{
         using iterator=RBT_iterator<T,T&,T*>;
         using const_iterator=RBT_iterator<T,const T&,const T*>;
         //default constructor
-        RBTree():_root(nullptr),_size(0){}
+        RBTree_base():_root(nullptr),_size(0){}
         //destructor
         void clear(N_ptr root){
             if(root==nullptr)
@@ -140,7 +140,7 @@ namespace MY_STL{
             delete root;
             root=nullptr;
         }
-        ~RBTree(){
+        ~RBTree_base(){
             clear(_root);
         }
         //rotate

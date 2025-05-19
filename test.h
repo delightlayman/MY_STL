@@ -7,6 +7,7 @@
 #include "binary_search_tree.h"
 #include "AVLTree.h"
 #include "Red_Black_Tree.h"
+#include "RBT_to_map_set.h"
 #include "pair.h"
 //my string
 using MY_STL::m_string;
@@ -24,6 +25,7 @@ using MY_STL::m_reverse_iterator;
 using MY_STL::BSTree;
 using MY_STL::AVLTree;
 using MY_STL::RBTree;
+using MY_STL::RBTree_base;
 //pair
 using MY_STL::m_pair;
 using MY_STL::make_m_pair;
@@ -837,10 +839,10 @@ void test_RBTree_3() {
 }
 
 
-void test_RBT_to_ms() {
+void test_RBT_ms() {
     const int N = 10;
     int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
-    RBTree<int, int> rbtree;
+    RBTree_base<int, int,key_identity> rbtree;
     for (int i = 0; i < N; ++i) {
         rbtree.insert(arr[i]);
     }
