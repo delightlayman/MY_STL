@@ -26,6 +26,17 @@ namespace MY_STL{
         Self* _left;
         Self* _right;
         RBTreeNode(const T& t=T()):_t(t),_color(Red),_parent(nullptr),_left(nullptr),_right(nullptr){}
+        RBTreeNode(const Self& n):_t(n._t),_color(n._color),_parent(nullptr),_left(nullptr),_right(nullptr){}
+        //Self& operator=(const Self& n) {
+        //    if (this != &n) {
+        //        _t = n._t;
+        //        _color = n._color;
+        //        _parent = n._parent;
+        //        _left = n._left;
+        //        _right = n._right;
+        //        return *this;
+        //    }
+        //}
     };
 
     template<class T,class Ref,class Ptr>
@@ -134,14 +145,14 @@ namespace MY_STL{
         Key_compare cmp;
 
         N_ptr leftmost(N_ptr root){
-             while(root->_left)
+             while(root&&root->_left)
                 root=root->_left;
              return root;
         }
         N_ptr rightmost(N_ptr root) {
-                while (root->_right)
-                    root = root->_right;
-                return root;
+            while (root&& root->_right)
+                root = root->_right;
+            return root;
         }
         //iterator
         using iterator=RBT_iterator<T,T&,T*>;
@@ -162,7 +173,7 @@ namespace MY_STL{
         //default constructor
         RBTree_base():_root(nullptr),_size(0){}
         //constructor
-        template<class InputIterator=>
+        template<class InputIterator>
         RBTree_base(InputIterator first,InputIterator last){
             while (first!=last){
                 insert(*first);
@@ -170,8 +181,29 @@ namespace MY_STL{
             }
         }
         //copy constructor
-        RBTree_base(const Self& rb){
+        void copy_tree(N_ptr& des_root,const N_ptr& src_root){
+            if(src_root==nullptr)
+                return;
+            des_root =new Node(*src_root);
+            copy_tree(des_root->_left,src_root->_left);
+            copy_tree(des_root->_right,src_root->_right);
 
+            if(des_root->_left)
+                des_root->_left->_parent= des_root;
+            if(des_root->_right)
+                des_root->_right->_parent= des_root;
+        }
+        RBTree_base(const Self& rb){
+            copy_tree(_root,rb._root);
+            _size=rb._size;
+        }
+        //operator=
+        Self& operator=(const Self& rb) {
+            if (this != &rb) {
+                copy_tree(_root,rb._root);
+                _size = rb._size;
+            }
+            return *this;
         }
         //destructor
         void clear(N_ptr root){
@@ -282,7 +314,7 @@ namespace MY_STL{
                     }
                     else{
                         delete newNode;
-                        return nullptr;//相等，无法插入
+                        return cur;//相等，无法插入,返回相等位置
                     }
                 }
             }
@@ -344,10 +376,10 @@ namespace MY_STL{
         }
         m_pair<iterator,bool> insert(const value_type& t){
             N_ptr cur=BST_add(t);
-            if(cur==nullptr)
-                return make_m_pair(iterator (nullptr),false);
+            if(cur->_t!=t)//cur为相等位置
+                return make_m_pair(iterator(nullptr),false);
             balance_add(cur);
-            return make_m_pair(iterator (cur),false);
+            return make_m_pair(iterator(cur),false);
         }
         //delete
         void adjust_delete_node(N_ptr& d_node){

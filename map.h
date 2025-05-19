@@ -17,44 +17,63 @@ namespace MY_STL{
             using map_key=key_extract_1<key_type,value_type>;
 
             using rbtree=RBTree_base<key_type,value_type,map_key,compare>;
-            using iterator=rbtree::iterator;
-            using const_iterator=rbtree::const_iterator;
+            using iterator=typename rbtree::iterator;
+            using const_iterator= typename rbtree::const_iterator;
 
-
+            iterator begin() {
+                return _rb->begin();
+            }
+            const_iterator begin()const {
+                return _rb->begin();//实际调用其const版本
+            }
+            iterator end() {
+                return _rb->end();
+            }
+            const_iterator end()const {
+                return _rb->end();//实际调用其const版本
+            }
             //constructor
             m_map():_rb(nullptr){}
             //copy constructor
-            m_map(const Self& map){}
+            template<class InputIterator>
+            m_map(InputIterator first,InputIterator last){
+                _rb=new rbtree(first,last);
+            }
+            m_map(const Self& map){
+                _rb=new rbtree(*map._rb);
+            }
             //operator =
-            Self& operator(const Self& map){}
-            m_map(const Self& map){}
+            Self& operator=(const Self& map){
+                if (this != &map) 
+                    _rb=new rbtree(*map._rb);
+                return *this;
+            }
             //destructor
-            ~m_map(){}
+            ~m_map() {}
 
             //add
             m_pair<iterator,bool> insert(const value_type& t){
-                return _rb.insert(t);
+                return _rb->insert(t);
             }
             //delete
             bool erase(const key_type& k){
-                return erase(k);
+                return _rb->erase(k);
             }
             //query
             iterator find(const key_type& k){
-                return _rb.find(k);
+                return _rb->find(k);
             }
             const_iterator find(const key_type& k)const{
-                return _rb.find(k)const;
+                return _rb->find(k);//实际调用其const版本
             }
 
             //按照key，访问val
             value_type& operator[](const key_type& k){
-                m_pair<iterator,bool> tmp=_rb.insert(make_m_pair(k,T()));
+                m_pair<iterator,bool> tmp=_rb->insert(make_m_pair(k,0));
                 return tmp._first->_second;
             }
             //modify---key不可修改，val可改
-
-        previte:
-            rbtree _rb;
+        private:
+            rbtree* _rb;
     };
 }

@@ -9,6 +9,9 @@
 //#include "Red_Black_Tree.h"
 #include "RBT_to_map_set.h"
 #include "pair.h"
+//map & set
+#include "map.h"
+#include "set.h"
 //my string
 using MY_STL::m_string;
 using MY_STL::simple_s;
@@ -29,6 +32,9 @@ using MY_STL::RBTree_base;
 //pair
 using MY_STL::m_pair;
 using MY_STL::make_m_pair;
+//map & set
+using MY_STL::m_map;
+using MY_STL::m_set;
 
 template<class T>
 inline void random_generate(T* arr, size_t n) {
@@ -904,17 +910,75 @@ void test_RBT_map() {
 
 void test_RBT_map_1() {
     const int N = 100;
-    m_pair<int,int> arr[N];
+    //int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+    int arr[N];
     random_generate(arr, N);
 
-
-
-    RBTree_base<int,m_pair<int,int>, key_extract_1<int, m_pair<int, int>>, more<int>> rbtree(arr,arr+100);
+    RBTree_base<int,int, key_identity<int>, more<int>> rbtree(arr,arr+N);
 
     auto it = rbtree.begin();
     while (it != rbtree.end()) {
-        cout << it->_first <<endl;
+        cout << *it<<endl;
         ++it;
     }
 
+    cout << "copy constructor" << endl;
+    auto rbtree_1(rbtree);
+    auto it_1 = rbtree_1.begin();
+    while (it_1 != rbtree_1.end()) {
+        cout << *it_1<< endl;
+        ++it_1;
+    }
+}
+
+
+void test_map() {
+    const int N = 25;
+    //int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+    int arr[N];
+    random_generate(arr, N);
+    
+    //m_map<int, int> map(arr, arr + N);
+    m_map<int, int, more<int>> map(arr, arr + N);
+
+    //m_map<int, int>::iterator it = map.begin();
+    auto it = map.begin();
+    int i = 0;
+    while (it != map.end()) {
+        cout <<i++<< ":" << it->_first  << endl;
+        ++it;
+    }
+    cout << "copy constructor" << endl;
+    auto map0(map);
+    auto it_0 = map0.begin();
+    i = 0;
+    while (it_0 != map0.end()) {
+        cout<<i++<< ":" << it_0->_first << endl;
+        ++it_0;
+    }
+    m_map<int, int, more<int>> map1;
+    map1 = map;
+    cout<<"operator ="<<endl;
+    auto it_1 = map1.begin();
+    i = 0;
+    while (it_1 != map1.end()) {
+        cout << i++ << ":" << it_1->_first<<"__" << it_1->_second << endl;
+        ++it_1;
+    }
+}
+
+
+
+void test_map_count() {
+    const int N = 10;
+    m_string arr[N] = {"苹果","苹果","苹果","柿子","苹果","柚子","柚子","柚子","柚子","柚子"};
+    m_map<m_string, int> map;
+    for (int i = 0; i < N; ++i) {
+        map.insert(arr[i]);
+    }
+    auto it = map.begin();
+    while (it != map.end()) {
+        cout<< it->_first << " " << it->_second << endl;
+        ++it;
+    }
 }

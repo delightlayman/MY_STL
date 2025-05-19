@@ -52,6 +52,8 @@ int main(){
     //test_RBTree_3();
     //test_RBT_ms();
     //test_RBT_map();
-    test_RBT_map_1();
+    //test_RBT_map_1();
+    //test_map();
+    test_map_count();
     return 0;
 }
