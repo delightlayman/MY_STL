@@ -13,6 +13,7 @@ using MY_STL::make_m_pair;
 //4.红节点的子节点为黑
 //5.对于节点到其所有子NULL的路径---黑节点数相同
 namespace MY_STL{
+
     enum Node_Color{ Red,Black };
     //存储键值对<key,val>
     //set为<key,key>---key即是val，故只需存储key值
@@ -173,6 +174,8 @@ namespace MY_STL{
         //default constructor
         RBTree_base():_root(nullptr),_size(0){}
         //constructor
+        //若数据较多，由于需要平衡调整，这个构造函数无法满足需求，若单独插入一个节点，不入直接insert
+        //RBTree_base(const N_ptr& node = nullptr, const size_t& size = 0) : _root(node), _size(size){}
         template<class InputIterator>
         RBTree_base(InputIterator first,InputIterator last){
             while (first!=last){
@@ -381,6 +384,13 @@ namespace MY_STL{
             balance_add(cur);
             return make_m_pair(iterator(cur),false);
         }
+
+        template<class InputIterator>
+        void insert(InputIterator first, InputIterator last) {
+            while (first != last) {
+                insert(*first);
+            }
+        }
         //delete
         void adjust_delete_node(N_ptr& d_node){
             //双子节点调整---删除节点替换为后继节点
@@ -563,6 +573,10 @@ namespace MY_STL{
             return nullptr;
         }
         //modify
+        void swap(Self& rbt) {
+            ::swap(_root, rbt._root);
+            ::swap(_size, rbt._size);
+        }
         //traverse
         //inorder traverse
         void inorder(const N_ptr& root)const{
