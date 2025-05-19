@@ -14,7 +14,7 @@ namespace MY_STL{
 
             using key_type=K;
             using value_type=m_pair<K,T>;
-            using map_key=key_extract_1;
+            using map_key=key_extract_1<key_type,value_type>;
 
             using rbtree=RBTree_base<key_type,value_type,map_key,compare>;
             using iterator=rbtree::iterator;

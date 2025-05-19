@@ -122,12 +122,13 @@ namespace MY_STL{
     template<class K,class T,class KOfT,class Key_compare=less<K>>
     class RBTree_base{
         public:
-        using value_type=T;
         using key_type=K;
+        using value_type=T;
 
         using Node=RBTreeNode<T>;
         using N_ptr=Node*;
         using N_ref=Node&;
+        using Self=RBTree_base<K,T,KOfT,Key_compare>;
         //auxiliary function---辅助函数K_
         KOfT ext;
         Key_compare cmp;
@@ -160,6 +161,18 @@ namespace MY_STL{
         }
         //default constructor
         RBTree_base():_root(nullptr),_size(0){}
+        //constructor
+        template<class InputIterator=>
+        RBTree_base(InputIterator first,InputIterator last){
+            while (first!=last){
+                insert(*first);
+                ++first;
+            }
+        }
+        //copy constructor
+        RBTree_base(const Self& rb){
+
+        }
         //destructor
         void clear(N_ptr root){
             if(root==nullptr)

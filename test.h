@@ -900,3 +900,21 @@ void test_RBT_map() {
     }
 
 }
+
+
+void test_RBT_map_1() {
+    const int N = 100;
+    m_pair<int,int> arr[N];
+    random_generate(arr, N);
+
+
+
+    RBTree_base<int,m_pair<int,int>, key_extract_1<int, m_pair<int, int>>, more<int>> rbtree(arr,arr+100);
+
+    auto it = rbtree.begin();
+    while (it != rbtree.end()) {
+        cout << it->_first <<endl;
+        ++it;
+    }
+
+}
