@@ -42,12 +42,17 @@ namespace MY_STL{
                 return erase(k);
             }
             //query
-            iterator find(const key_type& k){}
-            const_iterator find(const key_type& k)const{}
+            iterator find(const key_type& k){
+                return _rb.find(k);
+            }
+            const_iterator find(const key_type& k)const{
+                return _rb.find(k)const;
+            }
 
             //按照key，访问val
             value_type& operator[](const key_type& k){
-
+                m_pair<iterator,bool> tmp=_rb.insert(make_m_pair(k,T()));
+                return tmp._first->_second;
             }
             //modify---key不可修改，val可改
 
