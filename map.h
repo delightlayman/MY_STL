@@ -7,12 +7,6 @@ using MY_STL::m_pair;
 using MY_STL::make_m_pair;
 
 namespace MY_STL{
-    ////key提取函数:从数据类型T中提取，关键字key
-    ////适用pair<key,val>
-    //template<class K,class T>
-    //struct key_extract_1{
-    //    K& operator()(const T& t){ return d.first;}
-    //};
     template<class K,class T,class K_compare=less<K>>
     class m_map{
         public:
