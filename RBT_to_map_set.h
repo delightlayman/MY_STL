@@ -111,18 +111,18 @@ namespace MY_STL{
 
     //K---key
     //T---数据类型
-    template<class K,class T,class KOfT,class compare=less<K>>
+    template<class K,class T,class KOfT,class Key_compare=less<K>>
     class RBTree{
         public:
-        using value_type=T;
+        using value_type=T;K_
         using key_type=K;
 
         using Node=RBTreeNode<T>;
         using N_ptr=Node*;
         using N_ref=Node&;
-        //auxiliary function---辅助函数
+        //auxiliary function---辅助函数K_
         KOfT ext;
-        compare cmp;
+        Key_compare cmp;
 
         //iterator
         using iterator=RBT_iterator<T,T&,T*>;
@@ -301,9 +301,9 @@ namespace MY_STL{
         m_pair<iterator,bool> insert(const value_type& t){
             N_ptr cur=BST_add(t);
             if(cur==nullptr)
-                return make_m_pair(nullptr,false);
+                return make_m_pair(iterator (nullptr),false);
             balance_add(cur);
-            return make_m_pair(cur,false);
+            return make_m_pair(iterator (cur),false);
         }
         //delete
         void adjust_delete_node(N_ptr& d_node){

@@ -835,3 +835,27 @@ void test_RBTree_3() {
     cout << "RBTree size:" << rbtree.size() << endl;
 
 }
+
+
+void test_RBT_to_ms() {
+    const int N = 10;
+    int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+    RBTree<int, int> rbtree;
+    for (int i = 0; i < N; ++i) {
+        rbtree.insert(arr[i]);
+    }
+    cout << "insert dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+
+    for (int i = 0; i < N; ++i) {
+        rbtree.erase(arr[i]);
+        cout << "erase dates number_" << i << ":" << arr[i] << endl;
+        rbtree.inorder();
+        cout << "RBTree size:" << rbtree.size() << endl;
+    }
+
+    cout << "erase dates :" << endl;
+    rbtree.inorder();
+    cout << "RBTree size:" << rbtree.size() << endl;
+}
