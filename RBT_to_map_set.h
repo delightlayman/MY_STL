@@ -48,6 +48,7 @@ namespace MY_STL{
         Ref operator*(){ return _pnode->_t;}  
         Ptr operator->(){return &(_pnode->_t);}
 
+
         //基于中序遍历------iterator前往前驱---顺序：右根左
         void to_front(){
             if(_pnode->_left){  //左子节点非空
@@ -74,7 +75,7 @@ namespace MY_STL{
                 }
             }else{  //右子节点为空
                 N_ptr parent=_pnode->_parent;
-                while(parent!=nullptr&&parent->_left!=cur){
+                while(parent!=nullptr&&parent->_left!=_pnode){
                     _pnode=parent;
                     parent=_pnode->_parent;
                 }
@@ -106,6 +107,13 @@ namespace MY_STL{
             to_front();
             return tmp;
         }
+        //relational operator
+        bool operator==(const iterator& it)const {
+            return _pnode==it._pnode;
+        }
+        bool operator!=(const iterator& it)const {
+            return _pnode != it._pnode;
+        }
     };
 
 
@@ -114,7 +122,7 @@ namespace MY_STL{
     template<class K,class T,class KOfT,class Key_compare=less<K>>
     class RBTree_base{
         public:
-        using value_type=T;K_
+        using value_type=T;
         using key_type=K;
 
         using Node=RBTreeNode<T>;
@@ -124,9 +132,32 @@ namespace MY_STL{
         KOfT ext;
         Key_compare cmp;
 
+        N_ptr leftmost(N_ptr root){
+             while(root->_left)
+                root=root->_left;
+             return root;
+        }
+        N_ptr rightmost(N_ptr root) {
+                while (root->_right)
+                    root = root->_right;
+                return root;
+        }
         //iterator
         using iterator=RBT_iterator<T,T&,T*>;
         using const_iterator=RBT_iterator<T,const T&,const T*>;
+
+        iterator begin() {
+            return leftmost(_root);
+        }
+        iterator end() {
+            return nullptr;
+        }
+        const_iterator begin()const {
+            return leftmost(_root);
+        }
+        const_iterator end()const {
+            return nullptr;
+        }
         //default constructor
         RBTree_base():_root(nullptr),_size(0){}
         //destructor

@@ -6,7 +6,7 @@
 #include "iterator_adapter.h"
 #include "binary_search_tree.h"
 #include "AVLTree.h"
-#include "Red_Black_Tree.h"
+//#include "Red_Black_Tree.h"
 #include "RBT_to_map_set.h"
 #include "pair.h"
 //my string
@@ -24,16 +24,17 @@ using MY_STL::m_reverse_iterator;
 //tree
 using MY_STL::BSTree;
 using MY_STL::AVLTree;
-using MY_STL::RBTree;
+//using MY_STL::RBTree;
 using MY_STL::RBTree_base;
 //pair
 using MY_STL::m_pair;
 using MY_STL::make_m_pair;
 
-inline void random_generate(int arr[], size_t n) {
+template<class T>
+inline void random_generate(T* arr, size_t n) {
     srand(time(0));
     for (int i = 0; i < n; i++) {
-        arr[i] = rand();
+        arr[i] = T(rand());
     }
 }
 
@@ -769,95 +770,133 @@ void test_AVLTree(){
 
 
 // }
-void test_RBTree_1() {
-    const int N = 10;
-    int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
-    RBTree<int, int> rbtree;
-    for (int i = 0; i < N; ++i) {
-        rbtree.insert(arr[i]);
-    }
-    cout << "insert dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-
-    for (int i = 0; i < N; ++i) {
-        rbtree.erase(arr[i]);
-        cout << "erase dates number_" <<i <<":"<<arr[i] << endl;
-        rbtree.inorder();
-        cout << "RBTree size:" << rbtree.size() << endl;
-    }
-
-    cout << "erase dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-}
-void test_RBTree_2() {
-    const int N = 10000;
-    int arr[N];
-
-    RBTree<int, int> rbtree;
-    for (int i = 0; i < N; ++i) {
-        rbtree.insert(i);
-    }
-    cout << "insert dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-
-    for (int i = 0; i < N; ++i) {
-        rbtree.erase(i);
-    }
-    
-    cout << "erase dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-
-}
-
-
-
-void test_RBTree_3() {
-    const int N = 20000;
-    int arr[N];
-    random_generate(arr, N);
-
-    RBTree<int, int> rbtree;
-    for (int i = 0; i < N; ++i) {
-        rbtree.insert(arr[i]);
-    }
-    cout << "insert dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-
-    for (int i = 0; i < N; ++i) {
-        rbtree.erase(arr[i]);
-    }
-
-    cout << "erase dates :" << endl;
-    rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
-
-}
+//
+//void test_RBTree_1() {
+//    const int N = 10;
+//    int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+//    RBTree<int, int> rbtree;
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.insert(arr[i]);
+//    }
+//    cout << "insert dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.erase(arr[i]);
+//        cout << "erase dates number_" <<i <<":"<<arr[i] << endl;
+//        rbtree.inorder();
+//        cout << "RBTree size:" << rbtree.size() << endl;
+//    }
+//
+//    cout << "erase dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//}
+//void test_RBTree_2() {
+//    const int N = 10000;
+//    int arr[N];
+//
+//    RBTree<int, int> rbtree;
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.insert(i);
+//    }
+//    cout << "insert dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.erase(i);
+//    }
+//    
+//    cout << "erase dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//
+//}
+//
+//
+//
+//void test_RBTree_3() {
+//    const int N = 20000;
+//    int arr[N];
+//    random_generate(arr, N);
+//
+//    RBTree<int, int> rbtree;
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.insert(arr[i]);
+//    }
+//    cout << "insert dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//
+//    for (int i = 0; i < N; ++i) {
+//        rbtree.erase(arr[i]);
+//    }
+//
+//    cout << "erase dates :" << endl;
+//    rbtree.inorder();
+//    cout << "RBTree size:" << rbtree.size() << endl;
+//
+//}
 
 
 void test_RBT_ms() {
     const int N = 10;
     int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
-    RBTree_base<int, int,key_identity> rbtree;
+    RBTree_base<int, int,key_identity<int>,less<int>> rbtree;
     for (int i = 0; i < N; ++i) {
         rbtree.insert(arr[i]);
     }
-    cout << "insert dates :" << endl;
+    //cout << "insert dates :" << endl;
+    //rbtree.inorder();
+    //cout << "RBTree size:" << rbtree.size() << endl;
+
+    //for (int i = 0; i < N; ++i) {
+    //    rbtree.erase(arr[i]);
+    //    cout << "erase datas number_" << i << ":" << arr[i] << endl;
+    //    rbtree.inorder();
+    //    cout << "RBTree size:" << rbtree.size() << endl;
+    //}
+
+    //cout << "erase dates :" << endl;
+    //rbtree.inorder();
+    //cout << "RBTree size:" << rbtree.size() << endl;
+
+    RBTree_base<int,int,key_identity<int>,less<int>>::iterator it = rbtree.begin();
+    while (it != rbtree.end()) {
+            cout << *it << " ";
+            ++it;
+    }
+}
+
+
+
+void test_RBT_map() {
+    const int N = 100;
+    m_pair<int,int> arr[N];
+    random_generate(arr, N);
+
+    RBTree_base<int,m_pair<int,int>, key_extract_1<int, m_pair<int, int>>, more<int>> rbtree;
+    for (int i = 0; i < N; ++i) {
+        rbtree.insert(arr[i]);
+    }
+   /* cout << "insert dates :" << endl;
     rbtree.inorder();
     cout << "RBTree size:" << rbtree.size() << endl;
 
     for (int i = 0; i < N; ++i) {
-        rbtree.erase(arr[i]);
-        cout << "erase dates number_" << i << ":" << arr[i] << endl;
-        rbtree.inorder();
-        cout << "RBTree size:" << rbtree.size() << endl;
+        rbtree.erase(arr[i]._first);
     }
 
     cout << "erase dates :" << endl;
     rbtree.inorder();
-    cout << "RBTree size:" << rbtree.size() << endl;
+    cout << "RBTree size:" << rbtree.size() << endl;*/
+
+    auto it = rbtree.begin();
+    while (it != rbtree.end()) {
+        cout << it->_first <<endl;
+        ++it;
+    }
+
 }

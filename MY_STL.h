@@ -47,14 +47,18 @@ struct more_equal{
     bool operator()(const T& a,const T& b){ return a>=b;} 
 };
 
+
  //key提取函数:从数据类型T中提取，关键字key
  //适用key即是val
  template<class K>
  struct key_identity{
-     K& operator()(const K& k){ return k;}
+     const K& operator()(const K& k) { return k; }
+     //const版本确保：作为被调函数存在于 其他类const成员函数的调用
+     const K& operator()(const K& k)const{ return k;}
  };
  //适用pair<key,val>
  template<class K,class T>
  struct key_extract_1{
-     K& operator()(const T& t){ return d.first;}
+     const K& operator()(const T& t) { return t._first; }
+     const K& operator()(const T& t)const{ return t._first;}
  };
