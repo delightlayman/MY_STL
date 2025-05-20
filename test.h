@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "string.h"
 #include "vector.h"
 #include "list.h"
@@ -974,7 +974,7 @@ void test_map_count() {
     m_string arr[N] = {"苹果","苹果","苹果","柿子","苹果","柚子","柚子","柚子","柚子","柚子"};
     m_map<m_string, int> map;
     for (int i = 0; i < N; ++i) {
-        map.insert(arr[i]);
+        map[arr[i]]++;
     }
     auto it = map.begin();
     while (it != map.end()) {

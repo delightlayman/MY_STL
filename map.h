@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MY_STL.h"
 #include "RBT_to_map_set.h"
 #include "pair.h"
@@ -41,7 +41,8 @@ namespace MY_STL{
             }
             //copy constructor
             m_map(const Self& map){
-                _rb.swap(rbtree(map._rb));
+                rbtree tmp(map._rb);
+                _rb.swap(tmp);
             }
             //operator =
             Self& operator=(const Self& map){
@@ -72,7 +73,7 @@ namespace MY_STL{
             }
 
             //按照key，访问val
-            value_type& operator[](const key_type& k){
+            T& operator[](const K& k){
                 m_pair<iterator,bool> tmp=_rb.insert(make_m_pair(k,T()));
                 return tmp._first->_second;
             }

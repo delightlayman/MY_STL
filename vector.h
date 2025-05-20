@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "MY_STL.h"
 //模板类的成员函数声明和定义必须放在同一个头文件中，不能像普通类那样将声明（.h）和定义（.cpp）分开
 namespace MY_STL{
