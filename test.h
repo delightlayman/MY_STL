@@ -879,7 +879,7 @@ void test_RBT_ms() {
 
 
 void test_RBT_map() {
-    const int N = 100;
+    const int N = 10000;
     m_pair<int,int> arr[N];
     random_generate(arr, N);
 
@@ -904,7 +904,7 @@ void test_RBT_map() {
         cout << it->_first <<endl;
         ++it;
     }
-
+    cout << rbtree.size();
 }
 
 
@@ -989,7 +989,7 @@ void test_map_count() {
 void test_set() {
     const int N = 10;
     //int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
-    int arr[N] = { 0,6, 6, 6, 6, 9, 26, 18, 14, 15 };
+    int arr[N] = { 0,6, 6, 6, 6, 9, 26, 18, 18,18 };
     //int arr[N];
     //random_generate(arr, N);
     

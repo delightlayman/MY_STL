@@ -134,6 +134,7 @@ namespace MY_STL{
     template<class K,class T,class KOfT,class Key_compare=less<K>>
     class RBTree_base{
         public:
+        //static inline int count = 0;
         using key_type=K;
         using value_type=T;
 
@@ -142,7 +143,7 @@ namespace MY_STL{
         using N_ref=Node&;
 
         using Self=RBTree_base<K,T,KOfT,Key_compare>;
-        //auxiliary function---辅助函数K_
+        //auxiliary function---辅助函数
         KOfT ext;
         Key_compare cmp;
 
@@ -306,7 +307,7 @@ namespace MY_STL{
             if(_root==nullptr){
                 _root=newNode;
                 _size++;//更新大小
-                return m_pair(iterator(newNode),true);
+                return m_pair<iterator, bool>(iterator(newNode),true);
             }
             else{
                 while(cur){
@@ -320,7 +321,7 @@ namespace MY_STL{
                     }
                     else{
                         delete newNode;
-                        return m_pair(iterator(cur),false);//相等，无法插入,返回相等位置
+                        return m_pair<iterator, bool>(iterator(cur),false);//相等，无法插入,返回相等位置
                     }
                 }
             }
@@ -330,7 +331,7 @@ namespace MY_STL{
                 parent->_right=newNode;
             _size++;//更新大小
             newNode->_parent=parent;//更新父节点
-            return m_pair(iterator(newNode),true);
+            return m_pair<iterator, bool>(iterator(newNode),true);
         }
         void balance_add(N_ptr newnode){
             if(newnode!=_root){
@@ -382,8 +383,10 @@ namespace MY_STL{
         }
         m_pair<iterator,bool> insert(const value_type& t){
             m_pair<iterator,bool> cur=BST_add(t);
-            if(cur._second==true)//cur为相等位置
+            if (cur._second == true)//cur为新增节点
                 balance_add(cur._first._pnode);
+            //else
+            //    cout << "相等节点"<<count++<<endl;
             return cur;
         }
 
