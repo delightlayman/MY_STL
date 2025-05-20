@@ -982,3 +982,41 @@ void test_map_count() {
         ++it;
     }
 }
+
+
+
+
+void test_set() {
+    const int N = 25;
+    //int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
+    int arr[N];
+    random_generate(arr, N);
+    
+    //m_map<int, int> set(arr, arr + N);
+    m_set<int,more<int>> set(arr, arr + N);
+
+    //m_map<int, int>::iterator it = set.begin();
+    auto it = set.begin();
+    int i = 0;
+    while (it != set.end()) {
+        cout <<i++<< ":" << *it<< endl;
+        ++it;
+    }
+    cout << "copy constructor" << endl;
+    auto set0(set);
+    auto it0 = set0.begin();
+    i = 0;
+    while (it0 != set0.end()) {
+        cout<<i++<< ":" << *it0<< endl;
+        ++it0;
+    }
+    m_set<int, more<int>> set1;
+    set1 = set;
+    cout<<"operator ="<<endl;
+    auto it1 = set1.begin();
+    i = 0;
+    while (it1 != set1.end()) {
+        cout << i++ << ":" << *it1<< endl;
+        ++it1;
+    }
+}

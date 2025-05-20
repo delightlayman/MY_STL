@@ -54,6 +54,6 @@ int main(){
     //test_RBT_map();
     //test_RBT_map_1();
     //test_map();
-    test_map_count();
-
+    //test_map_count();
+    test_set();
 }

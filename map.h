@@ -13,10 +13,11 @@ namespace MY_STL{
             using Self=m_map<K,T,compare>;
 
             using key_type=K;
-            using value_type=m_pair<K,T>;
+            using value_type=m_pair<K,T>;//值存储类型
             using map_key=key_extract_1<key_type,value_type>;
 
             using rbtree=RBTree_base<key_type,value_type,map_key,compare>;
+            //iterator类型依赖rbtree模板参数的确定而确定---依赖类型，需要加typename告诉编译器其为类型，而非变量
             using iterator=typename rbtree::iterator;
             using const_iterator= typename rbtree::const_iterator;
 

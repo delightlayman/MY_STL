@@ -140,6 +140,7 @@ namespace MY_STL{
         using Node=RBTreeNode<T>;
         using N_ptr=Node*;
         using N_ref=Node&;
+
         using Self=RBTree_base<K,T,KOfT,Key_compare>;
         //auxiliary function---辅助函数K_
         KOfT ext;
@@ -203,6 +204,7 @@ namespace MY_STL{
         //operator=
         Self& operator=(const Self& rb) {
             if (this != &rb) {
+                clear(_root);//清空数据
                 copy_tree(_root,rb._root);
                 _size = rb._size;
             }
@@ -221,6 +223,7 @@ namespace MY_STL{
         }
         ~RBTree_base(){
             clear(_root);
+            _size = 0;
         }
         //rotate
         //rotate left
