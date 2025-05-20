@@ -987,10 +987,11 @@ void test_map_count() {
 
 
 void test_set() {
-    const int N = 25;
+    const int N = 10;
     //int arr[N] = { 0,6, 3, 7, 11, 9, 26, 18, 14, 15 };
-    int arr[N];
-    random_generate(arr, N);
+    int arr[N] = { 0,6, 6, 6, 6, 9, 26, 18, 14, 15 };
+    //int arr[N];
+    //random_generate(arr, N);
     
     m_set<int, less<int>> set(arr, arr + N);
     //m_set<int,more<int>> set(arr, arr + N);

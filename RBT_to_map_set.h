@@ -299,14 +299,14 @@ namespace MY_STL{
         }
         //add
         //按BST插入---返回newnode,且不做颜色调整
-        N_ptr BST_add(const value_type& t){
+        m_pair<iterator,bool> BST_add(const value_type& t){
             N_ptr newNode=new Node(t);
             N_ptr parent=nullptr;
             N_ptr cur=_root;
             if(_root==nullptr){
                 _root=newNode;
                 _size++;//更新大小
-                return newNode;
+                return m_pair(iterator(newNode),true);
             }
             else{
                 while(cur){
@@ -320,7 +320,7 @@ namespace MY_STL{
                     }
                     else{
                         delete newNode;
-                        return cur;//相等，无法插入,返回相等位置
+                        return m_pair(iterator(cur),false);//相等，无法插入,返回相等位置
                     }
                 }
             }
@@ -330,7 +330,7 @@ namespace MY_STL{
                 parent->_right=newNode;
             _size++;//更新大小
             newNode->_parent=parent;//更新父节点
-            return newNode;
+            return m_pair(iterator(newNode),true);
         }
         void balance_add(N_ptr newnode){
             if(newnode!=_root){
@@ -381,11 +381,10 @@ namespace MY_STL{
             _root->_color=Black;//根节点为黑色---包括newnode为根节点情况
         }
         m_pair<iterator,bool> insert(const value_type& t){
-            N_ptr cur=BST_add(t);
-            if(cur->_t!=t)//cur为相等位置
-                return make_m_pair(iterator(nullptr),false);
-            balance_add(cur);
-            return make_m_pair(iterator(cur),false);
+            m_pair<iterator,bool> cur=BST_add(t);
+            if(cur._second==true)//cur为相等位置
+                balance_add(cur._first._pnode);
+            return cur;
         }
 
         template<class InputIterator>
