@@ -392,6 +392,7 @@ namespace MY_STL{
         void insert(InputIterator first, InputIterator last) {
             while (first != last) {
                 insert(*first);
+                ++first;
             }
         }
         //delete

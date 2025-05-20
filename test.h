@@ -992,8 +992,8 @@ void test_set() {
     int arr[N];
     random_generate(arr, N);
     
-    //m_map<int, int> set(arr, arr + N);
-    m_set<int,more<int>> set(arr, arr + N);
+    m_set<int, less<int>> set(arr, arr + N);
+    //m_set<int,more<int>> set(arr, arr + N);
 
     //m_map<int, int>::iterator it = set.begin();
     auto it = set.begin();
@@ -1010,7 +1010,7 @@ void test_set() {
         cout<<i++<< ":" << *it0<< endl;
         ++it0;
     }
-    m_set<int, more<int>> set1;
+    m_set<int, less<int>> set1;
     set1 = set;
     cout<<"operator ="<<endl;
     auto it1 = set1.begin();
